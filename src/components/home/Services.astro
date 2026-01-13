@@ -1,0 +1,56 @@
+---
+const services = [
+  {
+    title: "Employee Transportation",
+    desc: "Safe and punctual daily employee pickup and drop services for offices, IT parks, and factories with trained drivers.",
+    icon: "/src/assets/images/home/Services-Icon-1.webp",
+  },
+  {
+    title: "Corporate Shuttle Services",
+    desc: "Dedicated shuttle routes for corporate campuses, night shifts, and rotational schedules with full coordination support.",
+    icon: "/src/assets/images/home/Services-Icon-2.webp",
+  },
+  {
+    title: "Contract Transport Solutions",
+    desc: "Long-term transport contracts for companies looking for reliable, cost-effective, and compliant mobility partners.",
+    icon: "/src/assets/images/home/Services-Icon-3.webp",
+  },
+];
+---
+
+<section class="kl-services kl-dots-bg">
+  <div class="kl-container kl-services__grid">
+    
+    <!-- Left content -->
+    <div class="kl-services__left">
+      <span class="kl-services__eyebrow">/ services /</span>
+      <h2 class="kl-services__title">
+        TRANSPORTATION SERVICES<br />
+        WE PROVIDE FOR BUSINESSES
+      </h2>
+
+      <a href="/services" class="kl-btn-primary">
+  <span class="kl-btn-primary__text">View Services</span>
+  <span class="kl-btn-primary__icon">↗</span>
+</a>
+
+
+
+
+    </div>
+
+    <!-- Right list -->
+    <div class="kl-services__right">
+      {services.map((s, i) => (
+        <div class="kl-service-item">
+          <img src={s.icon} alt={s.title} class="kl-service-item__icon" />
+          <div class="kl-service-item__content">
+            <h3>{s.title}</h3>
+            <p>{s.desc}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+
+  </div>
+</section>

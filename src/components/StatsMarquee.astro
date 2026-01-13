@@ -1,0 +1,29 @@
+---
+const items = Astro.props.items ?? [
+  { value: "2,000+", text: "employees transported daily" },
+  { value: "150+", text: "corporate routes managed" },
+  { value: "24×7", text: "safe & reliable employee commute" },
+];
+
+// duplicate for seamless loop
+const loopItems = [...items, ...items];
+---
+
+<section class="kl-stats" aria-label="Highlights">
+  <div class="kl-stats__track">
+    {loopItems.map((it) => (
+      <div class="kl-stats__item">
+        <span class="kl-stats__icon" aria-hidden="true">
+  <img
+    src="/src/assets/images/home/Scroll-Car-Icon.svg"
+    alt=""
+    class="kl-stats__icon-svg"
+    loading="lazy"
+  />
+</span>
+        <strong>{it.value}</strong>
+        <span>{it.text}</span>
+      </div>
+    ))}
+  </div>
+</section>

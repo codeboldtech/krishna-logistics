@@ -1,0 +1,140 @@
+---
+const slides = [
+  {
+    title: "On-time employee transport",
+    description:
+      "Safe pickups. Trained drivers. Zero delays.",
+    image: "/src/assets/images/home/Krishna-Logistics-Hero-1.webp",
+    ctaText: "Get a Quote",
+    ctaHref: "/contact-us",
+  },
+  {
+    title: "Trusted by companies",
+    description:
+      "Daily routes. Shift support. Reliable operations.",
+    image: "/src/assets/images/home/Krishna-Logistics-Hero-2.webp",
+    ctaText: "Get a Quote",
+    ctaHref: "/contact-us",
+  },
+  {
+    title: "Safety first, always",
+    description:
+      "GPS tracking. Verified drivers. 24/7 coordination.",
+    image: "/src/assets/images/home/Krishna-Logistics-Hero-3.webp",
+    ctaText: "Get a Quote",
+    ctaHref: "/contact-us",
+  },
+];
+---
+
+<section class="kl-hero">
+  <div class="kl-hero__frame" data-hero>
+    <div class="kl-hero__track" data-track>
+      {slides.map((s, i) => (
+        <article
+          class="kl-hero__slide"
+          data-slide
+          style={`background-image:url(${s.image})`}
+          aria-hidden={i === 0 ? "false" : "true"}
+        >
+          <div class="kl-hero__overlay"></div>
+
+          <div class="kl-hero__content">
+            <div class="kl-container kl-hero__content-inner">
+              <h1 class="kl-hero__title">{s.title}</h1>
+              <p class="kl-hero__desc">{s.description}</p>
+
+              <!-- ✅ button animation (only bg/text moves) -->
+              <a class="kl-hero-btn" href={s.ctaHref}>
+                <span class="kl-hero-btn__fill" aria-hidden="true"></span>
+                <span class="kl-hero-btn__label">{s.ctaText}</span>
+                <span class="kl-hero-btn__icon" aria-hidden="true">↗</span>
+              </a>
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+
+    <!-- ✅ ONE nav pill (not inside each slide) -->
+    <div class="kl-hero__nav">
+      <button class="kl-hero__navbtn" type="button" data-prev aria-label="Previous slide">←</button>
+      <button class="kl-hero__navbtn" type="button" data-next aria-label="Next slide">→</button>
+    </div>
+
+    <!-- ✅ ONE counter + progress (not inside each slide) -->
+    <div class="kl-hero__meta">
+      <div class="kl-hero__counter">
+        <span data-current>01</span>/<span data-total>{String(slides.length).padStart(2, "0")}</span>
+      </div>
+      <div class="kl-hero__progress">
+        <span class="kl-hero__bar" data-bar></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script is:inline>
+  document.addEventListener("DOMContentLoaded", () => {
+    const hero = document.querySelector("[data-hero]");
+    if (!hero) return;
+
+    const track = hero.querySelector("[data-track]");
+    const slides = Array.from(hero.querySelectorAll("[data-slide]"));
+    const total = slides.length;
+
+    const currentEl = hero.querySelector("[data-current]");
+    const barEl = hero.querySelector("[data-bar]");
+
+    let index = 0;
+    let isAnimating = false;
+
+    const pad2 = (n) => String(n).padStart(2, "0");
+
+    const updateUI = () => {
+      track.style.transform = `translateX(-${index * 100}%)`;
+
+      slides.forEach((s, i) => {
+        s.setAttribute("aria-hidden", i === index ? "false" : "true");
+      });
+
+      if (currentEl) currentEl.textContent = pad2(index + 1);
+      if (barEl) barEl.style.width = `${((index + 1) / total) * 100}%`;
+    };
+
+    const go = (nextIndex) => {
+      if (isAnimating) return;
+      isAnimating = true;
+
+      index = (nextIndex + total) % total;
+      updateUI();
+
+      window.setTimeout(() => (isAnimating = false), 520);
+    };
+
+    const nextBtn = hero.querySelector("[data-next]");
+    const prevBtn = hero.querySelector("[data-prev]");
+
+    if (nextBtn) nextBtn.addEventListener("click", () => go(index + 1));
+    if (prevBtn) prevBtn.addEventListener("click", () => go(index - 1));
+
+    // Swipe
+    let startX = null;
+    hero.addEventListener("touchstart", (e) => {
+      startX = e.touches[0].clientX;
+    }, { passive: true });
+
+    hero.addEventListener("touchend", (e) => {
+      if (startX === null) return;
+      const endX = e.changedTouches[0].clientX;
+      const diff = endX - startX;
+      if (Math.abs(diff) > 40) diff < 0 ? go(index + 1) : go(index - 1);
+      startX = null;
+    }, { passive: true });
+setInterval(() => {
+  go(index + 1);
+}, 4000);
+    updateUI();
+
+  });
+</script>

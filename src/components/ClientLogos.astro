@@ -1,0 +1,19 @@
+---
+const {
+  logos = [
+    { src: "src/assets/images/client-logos/Hallmark-Logo.webp", alt: "Client Logo 1" },
+    { src: "src/assets/images/client-logos/Ikea-Logo.webp", alt: "Client Logo 2" },
+    { src: "src/assets/images/client-logos/Versizon-Logo.webp", alt: "Client Logo 3" },
+  ],
+} = Astro.props;
+---
+
+<section class="kl-logos" aria-label="Trusted by">
+  <div class="kl-container">
+    <div class="kl-logos__row">
+      {logos.map((l) => (
+        <img src={l.src} alt={l.alt} loading="lazy" />
+      ))}
+    </div>
+  </div>
+</section>

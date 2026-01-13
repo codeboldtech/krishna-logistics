@@ -1,0 +1,59 @@
+---
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import FloatingWhatsApp from "../components/FloatingWhatsApp.astro";
+import ScrollToTop from "../components/ScrollToTop.astro";
+import CookieNotice from "../components/CookieNotice.astro";
+
+const {
+  title = "Krishna Logistics",
+  description = "Reliable employee transport solutions for companies. You Choose it.",
+  ogImage = "/og-placeholder.png",
+} = Astro.props;
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+
+    <title>{title} | Krishna Logistics</title>
+
+    <!-- OG -->
+    <meta property="og:title" content={`${title} | Krishna Logistics`} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:type" content="website" />
+
+    <!-- Favicon placeholder -->
+    <link rel="icon" href="/favicon.png" />
+
+    <!-- ✅ Correct Global Fonts (Inter + IBM Plex Sans) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body>
+    <Header />
+
+    <main>
+      <slot />
+    </main>
+
+    <Footer />
+
+    <FloatingWhatsApp />
+    <ScrollToTop />
+    <CookieNotice />
+  </body>
+</html>
+
+<!-- ✅ Correct way: global stylesheet -->
+<style is:global>
+  @import "../styles/global.css";
+</style>

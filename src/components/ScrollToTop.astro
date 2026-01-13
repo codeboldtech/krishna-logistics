@@ -1,0 +1,90 @@
+---
+const SHOW_AFTER = 300; // px scroll before showing
+---
+
+<button
+  class="kl-top"
+  type="button"
+  aria-label="Back to top"
+  data-top
+>
+  ↑
+</button>
+
+<script is:inline>
+  (() => {
+    const btn = document.querySelector("[data-top]");
+    if (!btn) return;
+
+    const toggle = () => {
+      if (window.scrollY > {SHOW_AFTER}) {
+        btn.classList.add("is-visible");
+      } else {
+        btn.classList.remove("is-visible");
+      }
+    };
+
+    btn.addEventListener("click", () => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    window.addEventListener("scroll", toggle, { passive: true });
+    toggle();
+  })();
+</script>
+
+<style>
+  .kl-top{
+    position: fixed;
+    left: 18px;        /* ✅ LEFT SIDE */
+    bottom: 88px;      /* above cookie bar */
+    z-index: 1150;
+
+    width: 46px;
+    height: 46px;
+
+    border-radius: 999px;
+    border: 0;
+    cursor: pointer;
+
+    background: var(--kl-primary);
+    color: #fff;
+    font-size: 20px;
+    font-weight: 900;
+
+    display: grid;
+    place-items: center;
+
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(6px);
+
+    box-shadow: 0 10px 26px rgba(0,0,0,.25);
+    transition:
+      opacity .25s ease,
+      transform .25s ease,
+      filter .25s ease;
+  }
+
+  .kl-top.is-visible{
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+
+  .kl-top:hover{
+    filter: brightness(0.95);
+    transform: translateY(-2px);
+  }
+
+  /* Mobile spacing */
+  @media (max-width: 640px){
+    .kl-top{
+      left: 14px;
+      bottom: 78px;
+      width: 44px;
+      height: 44px;
+      font-size: 18px;
+    }
+  }
+</style>

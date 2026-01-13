@@ -1,0 +1,133 @@
+---
+const storageKey = "kl_cookie_consent";
+---
+
+<div class="kl-cookie" data-cookie>
+  <div class="kl-cookie__inner">
+    <p class="kl-cookie__text">
+      We use cookies to improve your experience. By using this site, you agree to our cookie policy.
+    </p>
+
+    <div class="kl-cookie__actions">
+      <button class="kl-cookie__btn kl-cookie__btn--ghost" type="button" data-cookie-decline>
+        Decline
+      </button>
+      <button class="kl-cookie__btn kl-cookie__btn--primary" type="button" data-cookie-accept>
+        OK
+      </button>
+    </div>
+  </div>
+</div>
+
+<script is:inline>
+  (() => {
+    const KEY = "{storageKey}";
+    const bar = document.querySelector("[data-cookie]");
+    if (!bar) return;
+
+    /* If already decided, remove immediately */
+    const saved = localStorage.getItem(KEY);
+    if (saved === "accepted" || saved === "declined") {
+      bar.remove();
+      return;
+    }
+
+    const acceptBtn = bar.querySelector("[data-cookie-accept]");
+    const declineBtn = bar.querySelector("[data-cookie-decline]");
+
+    const removeBar = (value) => {
+      try {
+        localStorage.setItem(KEY, value);
+      } catch (e) {}
+
+      /* smooth fade out */
+      bar.style.opacity = "0";
+      bar.style.transform = "translateY(12px)";
+
+      setTimeout(() => {
+        bar.remove(); // ✅ completely removed from DOM
+      }, 220);
+    };
+
+    acceptBtn?.addEventListener("click", () => removeBar("accepted"));
+    declineBtn?.addEventListener("click", () => removeBar("declined"));
+  })();
+</script>
+
+<style>
+  .kl-cookie{
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1100;
+
+    padding: 14px;
+    display: flex;
+    justify-content: center;
+
+    transition: opacity .2s ease, transform .2s ease;
+  }
+
+  .kl-cookie__inner{
+    width: min(980px, 100%);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+
+    background: rgba(30,27,24,.92);
+    color: rgba(255,255,255,.92);
+    border-radius: 16px;
+    padding: 12px 14px;
+
+    backdrop-filter: blur(10px);
+  }
+
+  .kl-cookie__text{
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.45;
+  }
+
+  .kl-cookie__actions{
+    display: inline-flex;
+    gap: 10px;
+  }
+
+  .kl-cookie__btn{
+    border: 0;
+    cursor: pointer;
+    border-radius: 999px;
+    font-weight: 800;
+    padding: 10px 14px;
+    font-size: 14px;
+  }
+
+  .kl-cookie__btn--primary{
+    background: var(--kl-secondary);
+    color: #fff;
+  }
+
+  .kl-cookie__btn--ghost{
+    background: rgba(255,255,255,.12);
+    color: #fff;
+  }
+
+  /* Mobile */
+  @media (max-width: 640px){
+    .kl-cookie__inner{
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .kl-cookie__actions{
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .kl-cookie__btn{
+      width: 100%;
+    }
+  }
+</style>

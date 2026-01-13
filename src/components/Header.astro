@@ -1,0 +1,87 @@
+---
+const menu = [
+  { label: "Home", href: "/" },
+  { label: "About Us", href: "/about" },
+  { label: "Services", href: "/services" },
+  { label: "Contact Us", href: "/contact" },
+  
+];
+
+const phone = "+91 99669 33500 ";
+const ctaText = "Get a Quote";
+---
+
+<header class="kl-header kl-header--overlay">
+  <div class="kl-container kl-header-inner">
+    <!-- Left: Logo -->
+    <a href="/" class="kl-logo" aria-label="Home">
+      KRISHNA LOGISTICS
+    </a>
+
+    <!-- Center: Desktop Nav -->
+    <nav class="kl-nav" aria-label="Main navigation">
+      <ul class="kl-nav-list">
+        {menu.map((item) => (
+          <li class="kl-nav-item">
+            <a class="kl-nav-link" href={item.href}>{item.label}</a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+
+    <!-- Right: Phone + Button -->
+    <div class="kl-right">
+      <a class="kl-phone" href={`tel:${phone.replace(/\s+/g, "")}`}>{phone}</a>
+       <a class="kl-hero-btn" href="/contact">
+  <span class="kl-hero-btn__fill" aria-hidden="true"></span>
+  <span class="kl-hero-btn__label">Get a Quote</span>
+  <span class="kl-hero-btn__icon" aria-hidden="true">↗</span>
+</a>
+    </div>
+
+    <!-- Toggle (shown at Tablet + below) -->
+    <button class="kl-burger" type="button" aria-label="Open menu" data-kl-burger>
+      <span></span><span></span><span></span>
+    </button>
+
+    <!-- Mobile/Tablet Menu Panel -->
+    <div class="kl-mobile" data-kl-mobile>
+      <div class="kl-mobile-card">
+        <ul class="kl-mobile-list">
+          {menu.map((item) => (
+            <li>
+              <a class="kl-mobile-link" href={item.href}>{item.label}</a>
+            </li>
+          ))}
+        </ul>
+
+        <div class="kl-mobile-actions">
+          <a class="kl-hero-btn" href="/contact">
+  <span class="kl-hero-btn__fill" aria-hidden="true"></span>
+  <span class="kl-hero-btn__label">Get a Quote</span>
+  <span class="kl-hero-btn__icon" aria-hidden="true">↗</span>
+</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<script>
+  const burger = document.querySelector("[data-kl-burger]");
+  const mobile = document.querySelector("[data-kl-mobile]");
+
+  if (burger && mobile) {
+    burger.addEventListener("click", () => {
+      const isOpen = mobile.classList.toggle("is-open");
+      burger.classList.toggle("is-open", isOpen);
+    });
+
+    mobile.querySelectorAll("a").forEach((a) => {
+      a.addEventListener("click", () => {
+        mobile.classList.remove("is-open");
+        burger.classList.remove("is-open");
+      });
+    });
+  }
+</script>

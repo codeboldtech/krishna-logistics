@@ -1,0 +1,53 @@
+---
+const {
+  eyebrow = "/ what we do /",
+  title = "Special things which we do for our clients",
+  items = [
+    {
+      heading: "Employee Transport",
+      text: "Safe, punctual pick-up and drop with route planning and shift-based scheduling for your team.",
+    },
+    {
+      heading: "Corporate Transport Solutions",
+      text: "Dedicated support for offices, factories, and sites with flexible vehicle options and coordination.",
+    },
+  ],
+  ctaText = "Explore more",
+  ctaHref = "/services",
+  imageSrc = "/src/assets/images/home/Krishna-Logistics-HM-What-We-Do.webp", // replace later
+  imageAlt = "Krishna Logistics service image",
+} = Astro.props;
+---
+
+<section class="kl-wwd">
+  <div class="kl-container kl-wwd__inner">
+    <div class="kl-wwd__media">
+      <img class="kl-wwd__img" src={imageSrc} alt={imageAlt} loading="lazy" />
+    </div>
+
+    <div class="kl-wwd__content">
+      <div class="kl-wwd__eyebrow">{eyebrow}</div>
+      <div class="kl-wwd__rule" aria-hidden="true"></div>
+
+      <h2 class="kl-wwd__title">{title}</h2>
+
+      <div class="kl-wwd__list">
+        {items.map((it) => (
+          <div class="kl-wwd__item">
+            <h3 class="kl-wwd__itemTitle">{it.heading}</h3>
+            <p class="kl-wwd__itemText">{it.text}</p>
+          </div>
+        ))}
+      </div>
+
+      <a class="kl-hero-btn kl-wwd__btn" href={ctaHref}>
+        <span class="kl-hero-btn__fill" aria-hidden="true"></span>
+        <span class="kl-hero-btn__label">{ctaText}</span>
+        <span class="kl-hero-btn__icon" aria-hidden="true">↗</span>
+      </a>
+      <div class="kl-since">
+  Since <span>2020</span>
+</div>
+    </div>
+  </div>
+</section>
