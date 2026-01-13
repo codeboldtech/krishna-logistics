@@ -933,7 +933,7 @@ font-size: 18px;
   content: "";
   position: absolute;
   inset: -1rem -1rem -1rem -1rem;
-  background: url("/images/placeholders/dots-map.svg") center / cover no-repeat;
+
   opacity: 0.22;
   pointer-events: none;
   z-index: 0;
