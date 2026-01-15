@@ -6,7 +6,7 @@ export async function onRequest({ request, env }) {
   const formData = await request.formData();
   const data = Object.fromEntries(formData.entries());
 
-  // Honeypot spam protection (your hidden field name="website")
+  // Honeypot
   if (data.website) {
     return new Response(null, {
       status: 303,
@@ -14,21 +14,16 @@ export async function onRequest({ request, env }) {
     });
   }
 
-  // Basic required fields
   const name = (data.name || "").trim();
   const email = (data.email || "").trim();
   const phone = (data.phone || "").trim();
 
   if (!name || !email || !phone) {
-    // If required fields missing, send back to contact or show simple message
     return new Response("Missing required fields", { status: 400 });
   }
 
-  // Collect all fields (safe defaults)
   const payload = {
-    name,
-    email,
-    phone,
+    name, email, phone,
     company: (data.company || "").trim(),
     pickup: (data.pickup || "").trim(),
     drop: (data.drop || "").trim(),
@@ -38,7 +33,6 @@ export async function onRequest({ request, env }) {
     start: (data.start || "").trim(),
   };
 
-  // Email templates (simple + clean)
   const adminHtml = `
     <h2>New Quote Request – Krishna Logistics</h2>
     <table cellpadding="6" cellspacing="0" border="0">
@@ -70,29 +64,33 @@ export async function onRequest({ request, env }) {
     <p>— Krishna Logistics</p>
   `;
 
-  // Send to admin + user via Resend
-  // Required env vars:
-  // RESEND_API_KEY (Secret)
-  // ADMIN_EMAIL (Plaintext)
+  // ✅ Correct env usage
   const headers = {
-    Authorization: `Bearer ${env.re_YQQANyVz_JDieuDamayrEAksakjgSp8Kc}`,
+    Authorization: `Bearer ${env.RESEND_API_KEY}`,
     "Content-Type": "application/json",
   };
 
   // 1) Admin email
-  const adminRes = await fetch("https://api.resend.com/emails", {
+   const adminRes = await fetch("https://api.resend.com/emails", {
     method: "POST",
     headers,
     body: JSON.stringify({
       from: "Krishna Logistics <no-reply@mail.krishna-logistics.in>",
-      to: [env.kanishk@krishnalogistics.com],
+      to: [env.ADMIN_EMAIL],
       subject: `New Quote Request – ${payload.name}`,
-      reply_to: payload.email,
+      replyTo: payload.email,
       html: adminHtml,
     }),
   });
 
-  // 2) User auto-reply
+  if (!adminRes.ok) {
+    const adminBody = await adminRes.text();
+    return new Response(
+      JSON.stringify({ adminStatus: adminRes.status, adminBody }, null, 2),
+      { status: 500, headers: { "Content-Type": "application/json" } }
+    );
+  }
+
   const userRes = await fetch("https://api.resend.com/emails", {
     method: "POST",
     headers,
@@ -104,20 +102,10 @@ export async function onRequest({ request, env }) {
     }),
   });
 
-  // If Resend fails, show a friendly message (still redirect optional)
-  if (!adminRes.ok || !userRes.ok) {
-    console.log("Resend admin status:", adminRes.status);
-    console.log("Resend user status:", userRes.status);
-
-    return new Response(null, {
-      status: 303,
-      headers: { Location: new URL("/thank-you/", request.url).toString() },
-    });
+  if (!userRes.ok) {
+    const userBody = await userRes.text();
+    return new Response(
+      JSON.stringify({ userStatus: userRes.status, userBody }, null, 2),
+      { status: 500, headers: { "Content-Type": "application/json" } }
+    );
   }
-
-  // ✅ Success redirect
-  return new Response(null, {
-    status: 303,
-    headers: { Location: new URL("/thank-you/", request.url).toString() },
-  });
-}
