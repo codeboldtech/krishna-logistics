@@ -109,3 +109,19 @@ export async function onRequest({ request, env }) {
       { status: 500, headers: { "Content-Type": "application/json" } }
     );
   }
+const adminBodyOk = await adminRes.text();
+const userBodyOk = await userRes.text();
+
+return new Response(
+  JSON.stringify(
+    {
+      adminStatus: adminRes.status,
+      adminBody: adminBodyOk,
+      userStatus: userRes.status,
+      userBody: userBodyOk,
+    },
+    null,
+    2
+  ),
+  { status: 200, headers: { "Content-Type": "application/json" } }
+);
