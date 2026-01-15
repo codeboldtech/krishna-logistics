@@ -84,7 +84,7 @@ export async function onRequest({ request, env }) {
     method: "POST",
     headers,
     body: JSON.stringify({
-      from: "Krishna Logistics <onboarding@resend.dev>",
+      from: "Krishna Logistics <no-reply@mail.krishna-logistics.in>",
       to: [env.kanishk@krishnalogistics.com],
       subject: `New Quote Request – ${payload.name}`,
       reply_to: payload.email,
@@ -97,7 +97,7 @@ export async function onRequest({ request, env }) {
     method: "POST",
     headers,
     body: JSON.stringify({
-      from: "Krishna Logistics <kanishk@krishnalogistics.com>",
+      from: "Krishna Logistics <no-reply@mail.krishna-logistics.in>",
       to: [payload.email],
       subject: "We received your request – Krishna Logistics",
       html: userHtml,
