@@ -68,46 +68,50 @@ const address =
           <div class="kl-quoteform kl-contactCard">
   <h3 class="kl-quoteform__title">Request a quote</h3>
 
-  <form class="kl-quoteform__grid" action="#" method="post">
-    <input class="kl-in" type="text" name="name" placeholder="Full name" />
-    <input class="kl-in" type="email" name="email" placeholder="Email" />
-    <input class="kl-in" type="tel" name="phone" placeholder="Phone" />
-    <input class="kl-in" type="text" name="company" placeholder="Company" />
-    <input class="kl-in" type="text" name="pickup" placeholder="Pickup location" />
-    <input class="kl-in" type="text" name="drop" placeholder="Drop location" />
+  <form class="kl-quoteform__grid" method="POST" action="/api/quote">
+  <!-- honeypot (free spam protection) -->
+  <input
+    type="text"
+    name="website"
+    tabindex="-1"
+    autocomplete="off"
+    style="position:absolute;left:-9999px;opacity:0;height:0;width:0;"
+  />
 
-    <select class="kl-in" name="type">
-      <option>Transport Type</option>
-      <option>Employee Transport</option>
-      <option>Corporate Transport Solutions</option>
-    </select>
+  <input class="kl-in" type="text" name="name" placeholder="Full name" required />
+  <input class="kl-in" type="email" name="email" placeholder="Email" required />
+  <input class="kl-in" type="tel" name="phone" placeholder="Phone" required />
+  <input class="kl-in" type="text" name="company" placeholder="Company" />
+  <input class="kl-in" type="text" name="pickup" placeholder="Pickup location" />
+  <input class="kl-in" type="text" name="drop" placeholder="Drop location" />
 
-    <select class="kl-in" name="shift">
-      <option>Shift Timing</option>
-      <option>Day Shift</option>
-      <option>Night Shift</option>
-      <option>Rotational</option>
-    </select>
+  <select class="kl-in" name="type">
+    <option value="">Transport Type</option>
+    <option value="Employee Transport">Employee Transport</option>
+    <option value="Corporate Transport Solutions">Corporate Transport Solutions</option>
+  </select>
 
-    <input class="kl-in" type="text" name="count" placeholder="Employees count" />
+  <select class="kl-in" name="shift">
+    <option value="">Shift Timing</option>
+    <option value="Day Shift">Day Shift</option>
+    <option value="Night Shift">Night Shift</option>
+    <option value="Rotational">Rotational</option>
+  </select>
 
-    <div class="kl-in--date-wrap">
-      <input
-        class="kl-in kl-in--date"
-        type="date"
-        name="start"
-        aria-label="Start date"
-      />
-      <span class="kl-in--date-icon" aria-hidden="true"></span>
-    </div>
+  <input class="kl-in" type="text" name="count" placeholder="Employees count" />
 
-    <div class="kl-quoteform__actions">
-      <button class="kl-btn-primary" type="submit">
-        <span class="kl-btn-primary__text">Request a Quote</span>
-        <span class="kl-btn-primary__icon" aria-hidden="true">↗</span>
-      </button>
-    </div>
-  </form>
+  <div class="kl-in--date-wrap">
+    <input class="kl-in kl-in--date" type="date" name="start" aria-label="Start date" />
+    <span class="kl-in--date-icon" aria-hidden="true"></span>
+  </div>
+
+  <div class="kl-quoteform__actions">
+    <button class="kl-btn-primary" type="submit">
+      <span class="kl-btn-primary__text">Request a Quote</span>
+      <span class="kl-btn-primary__icon" aria-hidden="true">↗</span>
+    </button>
+  </div>
+</form>
 </div>
 
         </div>

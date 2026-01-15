@@ -1,0 +1,102 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Pagehero from "../components/Pagehero.astro";
+
+const crumbs = [
+  { label: "Home", href: "/" },
+  { label: "Thank You" },
+];
+
+const heroBg = "/images/page/krishna-logistics-page-template.webp";
+---
+
+<BaseLayout title="Thank You">
+  <Pagehero title="Thank You" bgImage={heroBg} crumbs={crumbs} />
+
+  <section class="kl-section kl-status">
+    <div class="kl-status__bg" aria-hidden="true"></div>
+
+    <div class="kl-status__wrap">
+      <div class="kl-status__grid">
+        <!-- LEFT -->
+        <div class="kl-statusCard">
+          <div class="kl-statusBadge">
+            <span class="kl-statusBadge__dot" aria-hidden="true"></span>
+            <span>Request received</span>
+          </div>
+
+          <h2>We’ve got your details.</h2>
+          <p>
+            Thanks for reaching out to Krishna Logistics. Our team will review your request and contact you shortly
+            with the best route plan and pricing for your requirement.
+          </p>
+
+          <ul class="kl-miniList">
+            <li>Response during business hours</li>
+            <li>Clear quote + transport plan</li>
+            <li>Support for shifts & route planning</li>
+          </ul>
+
+          <div class="kl-statusActions">
+            <a class="kl-btn-primary" href="/services">
+              <span class="kl-btn-primary__text">View Services</span>
+              <span class="kl-btn-primary__icon" aria-hidden="true">↗</span>
+            </a>
+
+            <a class="kl-btn-primary" href="/contact">
+              <span class="kl-btn-primary__text">Contact Us</span>
+              <span class="kl-btn-primary__icon" aria-hidden="true">↗</span>
+            </a>
+          </div>
+
+          <div class="kl-illu" aria-hidden="true">
+            <!-- simple inline illustration -->
+            <svg viewBox="0 0 900 360" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="g1" x1="0" x2="1">
+                  <stop offset="0" stop-color="rgba(28,54,98,.65)"/>
+                  <stop offset="1" stop-color="rgba(62,146,204,.55)"/>
+                </linearGradient>
+              </defs>
+              <rect width="900" height="360" fill="url(#g1)"/>
+              <circle cx="150" cy="120" r="80" fill="rgba(255,255,255,.18)"/>
+              <circle cx="760" cy="90" r="55" fill="rgba(255,255,255,.14)"/>
+              <rect x="130" y="210" width="640" height="26" rx="13" fill="rgba(255,255,255,.22)"/>
+              <rect x="180" y="250" width="540" height="18" rx="9" fill="rgba(255,255,255,.18)"/>
+              <path d="M320 188l40 40 90-110" fill="none" stroke="rgba(255,255,255,.9)" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+        </div>
+
+        <!-- RIGHT -->
+        <div class="kl-statusCard">
+          <h3>What happens next</h3>
+          <p>
+            We’ll confirm your requirement and share a structured plan for transport execution.
+          </p>
+
+          <div class="kl-summaryGrid">
+            <div class="kl-summaryRow">
+              <span>Step 1</span>
+              <strong>Verify details</strong>
+            </div>
+            <div class="kl-summaryRow">
+              <span>Step 2</span>
+              <strong>Route & shift planning</strong>
+            </div>
+            <div class="kl-summaryRow">
+              <span>Step 3</span>
+              <strong>Quote & start date</strong>
+            </div>
+          </div>
+
+          <div class="kl-chipRow" aria-label="Quick links">
+            <a class="kl-chip" href="/about"><span aria-hidden="true">↗</span>About Us</a>
+            <a class="kl-chip" href="/services"><span aria-hidden="true">↗</span>Services</a>
+            <a class="kl-chip" href="/"><span aria-hidden="true">↗</span>Home</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

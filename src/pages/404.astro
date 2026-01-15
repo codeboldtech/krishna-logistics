@@ -1,0 +1,78 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Pagehero from "../components/Pagehero.astro";
+
+const crumbs = [
+  { label: "Home", href: "/" },
+  { label: "404" },
+];
+
+const heroBg = "/images/page/krishna-logistics-page-template.webp";
+---
+
+<BaseLayout title="Page Not Found">
+  <Pagehero title="Page Not Found" bgImage={heroBg} crumbs={crumbs} />
+
+  <section class="kl-section kl-status">
+    <div class="kl-status__bg" aria-hidden="true"></div>
+
+    <div class="kl-status__wrap">
+      <div class="kl-status__grid" style="grid-template-columns: 1fr;">
+        <!-- MAIN CONTENT -->
+        <div class="kl-statusCard">
+          <p class="kl-bigOutline">404</p>
+
+          <h2>This page is not available.</h2>
+
+          <p>
+            The page you’re trying to reach doesn’t exist or may have been moved.
+            Please use the buttons below to continue browsing.
+          </p>
+
+          <div class="kl-statusActions">
+            <a class="kl-btn-primary" href="/">
+              <span class="kl-btn-primary__text">Go to Home</span>
+              <span class="kl-btn-primary__icon" aria-hidden="true">↗</span>
+            </a>
+
+            <a class="kl-btn-primary" href="/contact">
+              <span class="kl-btn-primary__text">Contact Us</span>
+              <span class="kl-btn-primary__icon" aria-hidden="true">↗</span>
+            </a>
+          </div>
+
+          <div class="kl-chipRow">
+            <a class="kl-chip" href="/services">
+              <span aria-hidden="true">↗</span> Services
+            </a>
+            <a class="kl-chip" href="/about">
+              <span aria-hidden="true">↗</span> About Us
+            </a>
+          </div>
+
+          <div class="kl-illu" aria-hidden="true">
+            <svg viewBox="0 0 900 360" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="g404" x1="0" x2="1">
+                  <stop offset="0" stop-color="rgba(255,138,0,.18)" />
+                  <stop offset="1" stop-color="rgba(62,146,204,.18)" />
+                </linearGradient>
+              </defs>
+
+              <rect width="900" height="360" fill="url(#g404)" />
+              <circle cx="200" cy="140" r="70" fill="rgba(255,255,255,.28)" />
+              <circle cx="720" cy="110" r="55" fill="rgba(255,255,255,.22)" />
+              <path
+                d="M150 250c150-120 300-120 450 0"
+                fill="none"
+                stroke="rgba(0,0,0,.15)"
+                stroke-width="16"
+                stroke-linecap="round"
+              />
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

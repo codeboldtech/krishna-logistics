@@ -174,7 +174,7 @@ h1, h2, h3, h4, h5, h6 { font-family: var(--kl-font-heading); }
   height: 1.25rem;
   opacity: .6;
   pointer-events: none;
-  background: url("/images/footer/calendar.svg") center/contain no-repeat;
+  
 }
 
 .kl-quoteform__actions{ grid-column: 1/-1; padding-top: .25rem; }
@@ -1478,4 +1478,164 @@ font-size: 18px;
   .kl-pagehero__frame {
     min-height: 230px;
   }
+}
+/* =========================
+   STATUS PAGES (404 + THANK YOU)
+   ========================= */
+
+.kl-status {
+  position: relative;
+  overflow: hidden;
+}
+
+.kl-status__wrap {
+  width: min(1300px, calc(100% - 48px));
+  margin-inline: auto;
+}
+
+@media (max-width: 768px) {
+  .kl-status__wrap { width: calc(100% - 32px); }
+}
+
+/* soft pattern background */
+.kl-status__bg {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: .65;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(62,146,204,.14) 0%, transparent 45%),
+    radial-gradient(circle at 85% 30%, rgba(28,54,98,.16) 0%, transparent 50%),
+    radial-gradient(circle at 50% 85%, rgba(255,138,0,.10) 0%, transparent 55%),
+    linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,.02) 100%);
+}
+
+/* main grid */
+.kl-status__grid {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 1.1fr .9fr;
+  gap: 2.5rem;
+  align-items: start;
+  padding: clamp(2rem, 4vw, 3rem) 0;
+}
+
+@media (max-width: 1024px) {
+  .kl-status__grid { grid-template-columns: 1fr; }
+}
+
+.kl-statusCard {
+  background: #fff;
+  border: 1px solid rgba(0,0,0,.08);
+  border-radius: 1.75rem;
+  padding: clamp(1.25rem, 2.5vw, 2rem);
+  box-shadow: 0 18px 45px rgba(0,0,0,.08);
+}
+
+.kl-statusBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  padding: .5rem .85rem;
+  border-radius: 999px;
+  border: 1px solid rgba(0,0,0,.10);
+  background: rgba(255,255,255,.65);
+}
+
+.kl-statusBadge__dot {
+  width: .55rem;
+  height: .55rem;
+  border-radius: 999px;
+  background: var(--kl-secondary);
+}
+
+.kl-statusActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .75rem;
+  margin-top: 1rem;
+}
+
+/* chips for quick links */
+.kl-chipRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .65rem;
+  margin-top: 1rem;
+}
+
+.kl-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: .45rem;
+  padding: .6rem .9rem;
+  border-radius: 999px;
+  background: rgba(0,0,0,.04);
+  border: 1px solid rgba(0,0,0,.08);
+  text-decoration: none;
+  color: inherit;
+}
+
+.kl-chip:hover {
+  border-color: rgba(0,0,0,.14);
+  background: rgba(0,0,0,.06);
+}
+
+/* big outlined number (404) */
+.kl-bigOutline {
+  font-weight: 900;
+  line-height: .9;
+  color: transparent;
+  -webkit-text-stroke: 2px rgba(0,0,0,.15);
+  text-transform: uppercase;
+  letter-spacing: -.02em;
+  font-size: clamp(76px, 10vw, 140px);
+  margin: 0;
+}
+
+/* small list */
+.kl-miniList {
+  margin: .75rem 0 0;
+  padding-left: 1.2rem;
+  display: grid;
+  gap: .55rem;
+}
+
+/* right “summary” box */
+.kl-summaryGrid {
+  display: grid;
+  gap: .85rem;
+  margin-top: .75rem;
+}
+
+.kl-summaryRow {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: .75rem 1rem;
+  border-radius: 1rem;
+  background: rgba(0,0,0,.03);
+  border: 1px solid rgba(0,0,0,.06);
+}
+
+.kl-summaryRow strong {
+  font-weight: 800;
+}
+
+/* inline svg container */
+.kl-illu {
+  display: grid;
+  place-items: center;
+  margin-top: 1rem;
+  border-radius: 1.5rem;
+  overflow: hidden;
+  border: 1px solid rgba(0,0,0,.08);
+  background: linear-gradient(135deg, rgba(28,54,98,.08), rgba(62,146,204,.10));
+}
+
+.kl-illu svg {
+  width: 100%;
+  height: auto;
+  display: block;
 }
