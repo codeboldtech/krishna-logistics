@@ -38,27 +38,44 @@ html, body {
   --kl-header-z: 1000;
 }
 html {
-  font-size: 18px; /* 1rem = 16px */
+  font-size: 18px;
 }
 
-body {
-  font-size: 1.1rem;       
-  line-height: 1.6;
+body { font-size: 1.1rem; line-height: 1.6; }
+
+/* =========================
+   TYPOGRAPHY SYSTEM
+   Keep headings consistent everywhere
+   ========================= */
+h1 {
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  font-size: clamp(2.2rem, 4vw, 4.5rem);
 }
 
-/* Headings scale */
-h1 { font-size: clamp(2.2rem, 4vw, 4.5rem); }
-h2 { font-size: clamp(1.8rem, 3vw, 3.5rem); }
-h3 { font-size: 1.4rem; }
-h4 { font-size: 1.2rem; }
-h5 { font-size: 1rem; }
-h6 { font-size: 0.9rem; }
+/* User requirement: Desktop 60, Tablet 40, Mobile 30 */
+h2 {
+  font-weight: 700;
+  margin: 20px 0 40px;
+  font-size: 60px;
+  line-height: 1.15;
+}
+
+h3 {
+  font-weight: 800;
+  line-height: 1.2;
+  font-size: 1.4rem;
+  margin: 0 0 0.75rem;
+}
+
+h4 { font-weight: 800; margin: 0 0 0.6rem; font-size: 1.2rem; }
+h5 { font-weight: 800; margin: 0 0 0.5rem; font-size: 1rem; }
+h6 { font-weight: 800; margin: 0 0 0.5rem; font-size: 0.9rem; }
 
 /* Paragraphs & text */
-p {
-  font-size: 1.1rem;
-  line-height: 1.7;
-}
+p { font-size: 1.1rem; line-height: 1.7; margin: 0; }
+
 /* Base typography */
 body {
   font-family: var(--kl-font-body);
@@ -68,16 +85,13 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-h1, h2, h3, h4, h5, h6 {
-  font-family: var(--kl-font-heading);
-  margin: 0;
-}
+h1, h2, h3, h4, h5, h6 { font-family: var(--kl-font-heading); }
 .container{
   width: min(var(--site-max), 100%);
   margin-inline: auto;
   padding-inline: var(--site-pad);
 }
-p { margin: 0; }
+
 
 /* Container */
 .kl-container {
@@ -92,11 +106,264 @@ p { margin: 0; }
 @media (max-width: 767.98px) {
   .kl-container { width: calc(100% - 32px); } /* 16px + 16px */
   .kl-section { padding-block: var(--kl-section-py-mobile); }
+  
+  h2 { font-size: 30px; line-height: 1.25; margin: 16px 0 28px; }
 }
 
 /* Tablet spacing */
 @media (min-width: 768px) and (max-width: 1024px) {
-  .kl-container { width: calc(100% - 48px); } /* 24px + 24px */
+  .kl-container { width: calc(100% - 48px); }
+  h2 { font-size: 40px; line-height: 1.2; margin: 18px 0 34px; }
+  
+}
+/* =========================
+   GLOBAL: Quote Form (Footer + Contact)
+   ========================= */
+
+/* form card */
+.kl-quoteform{
+  background: #fff;
+  border-radius: 1.25rem;
+  padding: 1.6rem;
+  box-shadow: 0 1.25rem 3rem rgba(0,0,0,.35);
+}
+
+.kl-quoteform__title{
+  margin: 0 0 1.1rem;
+  font-weight: 800;
+}
+
+.kl-quoteform__grid{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: .9rem;
+}
+
+.kl-in{
+  width: 100%;
+  border: 1px solid rgba(30,27,24,.22);
+  border-radius: .75rem;
+  padding: .85rem .9rem;
+  outline: none;
+  background: #fff;
+  min-width: 0;
+}
+
+.kl-in:focus{
+  border-color: var(--kl-secondary);
+  box-shadow: 0 0 0 .2rem rgba(62,146,204,.22);
+}
+
+.kl-in--date-wrap{ position: relative; }
+.kl-in--date{ padding-right: 2.9rem; appearance: none; }
+.kl-in,
+.kl-quoteform select.kl-in,
+.kl-quoteform textarea.kl-in {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  color: inherit;
+}
+
+.kl-in--date-icon{
+  position: absolute;
+  right: .95rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 1.25rem;
+  height: 1.25rem;
+  opacity: .6;
+  pointer-events: none;
+  background: url("/images/footer/calendar.svg") center/contain no-repeat;
+}
+
+.kl-quoteform__actions{ grid-column: 1/-1; padding-top: .25rem; }
+
+/* NOTE: Primary button styles live in the CTA BUTTON section below.
+   Do not redefine .kl-btn-primary here to avoid duplicates. */
+
+/* responsive */
+@media (max-width: 64rem){
+  .kl-quoteform__grid{ grid-template-columns: 1fr; }
+}
+
+/* =====================================================
+   PAGES: ABOUT
+   ===================================================== */
+.kl-aboutIntro__grid {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 6rem;
+  align-items: start;
+}
+
+.kl-aboutIntro__title {
+  text-transform: uppercase;
+  font-weight: 800;
+  line-height: 1.1;
+  max-width: 40rem;
+}
+
+.kl-aboutIntro__content {
+  display: grid;
+  gap: 2rem;
+  max-width: 32rem;
+}
+
+@media (max-width: 1024px) {
+  .kl-aboutIntro__grid { grid-template-columns: 1fr; gap: 0rem; }
+  .kl-aboutIntro__title,
+  .kl-aboutIntro__content { max-width: 100%; }
+}
+
+/* =====================================================
+   PAGES: SERVICES
+   ===================================================== */
+.kl-svcSplit { padding-top: 60px; padding-bottom: 60px; }
+
+.kl-svcIntro__inner {
+  max-width: 62rem;
+  display: grid;
+  gap: 1rem;
+}
+
+.kl-svcEyebrow {
+  font-size: 14px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.kl-svcSplit__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+}
+
+.kl-svcSplit__media {
+  border-radius: 1.5rem;
+  overflow: hidden;
+  background: rgba(0,0,0,0.04);
+}
+
+.kl-svcSplit__img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+}
+
+.kl-svcSplit__content { display: grid; gap: 1rem; }
+
+.kl-svcSplit__card {
+  background: #ffffff;
+  border: 1px solid rgba(0,0,0,0.08);
+  border-radius: 1.25rem;
+  padding: 1.5rem;
+  display: grid;
+  gap: 0.75rem;
+}
+
+.kl-svcSplit__list {
+  margin: 0;
+  padding-left: 1.2rem;
+  display: grid;
+  gap: 0.6rem;
+}
+
+.kl-svcSplit__cta { margin-top: 0.5rem; }
+
+/* Reverse layout on desktop (content left, image right) */
+.kl-svcSplit--reverse .kl-svcSplit__media { order: 2; }
+.kl-svcSplit--reverse .kl-svcSplit__content { order: 1; }
+
+/* Tablet + Mobile: image on top, content bottom (for ALL sections) */
+@media (max-width: 1024px) {
+  .kl-svcSplit__grid { grid-template-columns: 1fr; gap: 2rem; }
+  .kl-svcSplit__media { order: 1 !important; }
+  .kl-svcSplit__content { order: 2 !important; }
+  .kl-svcSplit { padding: 20px 0; }
+}
+
+/* =====================================================
+   PAGES: CONTACT
+   ===================================================== */
+.kl-contact__grid {
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: 3rem;
+  align-items: start;
+}
+
+.kl-contact__left {
+  position: relative;
+  border-radius: 1.75rem;
+  overflow: hidden;
+  background: #fff;
+  border: 1px solid rgba(0,0,0,0.08);
+  padding: 2.25rem;
+  min-height: 100%;
+}
+
+.kl-contact__map {
+  position: absolute;
+  inset: 0;
+  opacity: 0.35;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 12% 30%, rgba(0,0,0,0.14) 1px, transparent 2px) 0 0 / 18px 18px,
+    radial-gradient(circle at 48% 55%, rgba(0,0,0,0.10) 1px, transparent 2px) 0 0 / 22px 22px,
+    radial-gradient(circle at 78% 40%, rgba(0,0,0,0.12) 1px, transparent 2px) 0 0 / 20px 20px;
+  mask-image: radial-gradient(circle at 35% 55%, #000 0%, transparent 68%);
+}
+
+.kl-contact__leftInner {
+  position: relative;
+  display: grid;
+  gap: 1.25rem;
+}
+
+.kl-contact__infoGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.75rem 2.25rem;
+  margin-top: 1rem;
+}
+
+.kl-contactInfo p { margin: 0.5rem 0 0; }
+.kl-contactInfo a { color: inherit; text-decoration: underline; }
+
+.kl-contact__social {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.kl-socialBtn {
+  width: 42px;
+  height: 42px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: rgba(0,0,0,0.06);
+  border: 1px solid rgba(0,0,0,0.08);
+  text-decoration: none;
+  color: inherit;
+}
+
+.kl-contactCard {
+  border-radius: 1.75rem;
+  background: #fff;
+  border: 1px solid rgba(0,0,0,0.10);
+  padding: 2.25rem;
+}
+
+@media (max-width: 1024px) {
+  .kl-contact__grid { grid-template-columns: 1fr; gap: 2rem; }
+  .kl-contact__left, .kl-contactCard { padding: 1.5rem; }
+  .kl-contact__infoGrid { grid-template-columns: 1fr; gap: 1.25rem; }
 }
 
 /* =====================================================
@@ -129,15 +396,16 @@ p { margin: 0; }
   font-weight: 800;
   letter-spacing: 0.02em;
   font-size: 30px;
+  padding-left: 1rem;
 }
 
 /* Nav pill */
 .kl-nav {
   justify-self: center;
-  background: rgba(10, 36, 99, 0.10); /* derived from primary */
+  background: rgba(10, 36, 99, 0.20); /* derived from primary */
   border-radius: 999px;
   padding: 20px 34px;
-  backdrop-filter: blur(12px);
+  backdrop-filter: blur(20px);
   font-size: 16px;
 }
 
@@ -202,6 +470,14 @@ p { margin: 0; }
    Normal secondary, hover white + primary text
    ===================================================== */
 .kl-btn-primary {
+  border: none;
+  outline: none;
+  appearance: none;
+  -webkit-appearance: none;
+
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
   position: relative;
   display: inline-flex;
   align-items: center;
@@ -349,7 +625,7 @@ p { margin: 0; }
   height: 46px;
   border-radius: 999px;
   border: 0;
-  background: #3E92CC;
+  background: #fff;
   backdrop-filter: blur(12px);
   cursor: pointer;
   padding: 10px;
@@ -361,8 +637,8 @@ p { margin: 0; }
 
 .kl-burger span {
   display: block;
-  width: 5px;
-  height: 5px;
+  width: 7px;
+  height: 7px;
   background: var(--kl-text);
   border-radius: 50px;
 }
@@ -504,7 +780,7 @@ p { margin: 0; }
 .kl-hero__overlay {
   position: absolute;
   inset: 0;
-  background: rgba(30, 27, 24, 0.55); /* derived from dark */
+  background: rgba(30, 27, 24, 0.8); /* derived from dark */
 }
 
 /* Content center */
@@ -528,12 +804,12 @@ p { margin: 0; }
 .kl-hero__title {
   font-family: var(--kl-font-heading);
   color: #ffffff;
-  font-weight: 500;
-  text-transform: uppercase;
+  font-weight: 600;
+  
   letter-spacing: -0.02em;
-  font-size: 64px;
+  font-size: 80px;
   line-height: 1.05;
-  max-width: 980px;
+  max-width: 1050px;
   white-space: pre-line;
 }
 
@@ -690,14 +966,14 @@ font-size: 18px;
   .kl-hero__content { padding: 120px 0 110px; }
 
   .kl-hero__title {
-    font-size: 26px;
+    font-size: 40px;
     line-height: 1.15;
     max-width: 320px;
   }
 
   .kl-hero__desc {
-    font-size: 14px;
-    max-width: 320px;
+    font-size: 18px;
+    max-width: 420px;
   }
 
   .kl-hero__nav { right: 14px; bottom: 26px; border-radius: 14px; }
@@ -747,7 +1023,7 @@ font-size: 18px;
 
 .kl-services__title {
   margin: 20px 0 40px;
-  font-size: 48px;
+  font-size: 60px;
   line-height: 1.15;
   font-weight: 700;
 }
@@ -980,7 +1256,6 @@ font-size: 18px;
 
 .kl-wwd__itemText {
   font-family: var(--kl-font-body);
-  font-size: 1rem;
   line-height: 1.7;
   opacity: 0.9;
 }
@@ -1087,5 +1362,120 @@ font-size: 18px;
 
   .kl-logos__row img {
     max-height: 3rem;
+  }
+}
+/* =========================
+   INNER PAGE HERO (PageHero)
+   ========================= */
+.kl-pagehero {
+  padding: 18px 24px 0;
+
+}
+
+.kl-pagehero__frame {
+ 
+  position: relative;
+  border-radius: 30px;
+  overflow: hidden;
+  min-height: 340px; /* shorter than homepage hero */
+}
+
+.kl-pagehero__bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  transform: scale(1.02);
+}
+
+.kl-pagehero__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 0.55) 0%,
+    rgba(0, 0, 0, 0.25) 45%,
+    rgba(0, 0, 0, 0.15) 100%
+  );
+}
+
+.kl-pagehero__content {
+  position: relative;
+  z-index: 2;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 18px;
+  padding: 12rem 0 60px;
+  
+}
+
+.kl-pagehero__title {
+  color: #fff;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  
+  font-size: clamp(32px, 5vw, 78px);
+  line-height: 1.05;
+  margin: 0;
+}
+.kl-pagehero__content .kl-container {
+  display: grid;
+  gap: 18px;
+}
+/* Breadcrumb pill */
+.kl-pagehero__crumbs {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  background: #fff;
+  color: #111;
+  border-radius: 18px;
+  padding: 14px 18px;
+  width: fit-content;
+  max-width: 100%;
+  font-size: 16px;
+}
+
+.kl-pagehero__link {
+  color: #111;
+  text-decoration: underline;
+}
+
+.kl-pagehero__sep {
+  opacity: 0.6;
+}
+
+.kl-pagehero__current {
+  opacity: 0.85;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .kl-pagehero {
+    padding: 14px 14px 0;
+  }
+
+  .kl-pagehero__frame {
+    min-height: 260px;
+    border-radius: 24px;
+  }
+
+  .kl-pagehero__content {
+    padding: 140px 0px 22px;
+  }
+
+  .kl-pagehero__crumbs {
+    border-radius: 16px;
+    padding: 12px 14px;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 420px) {
+  .kl-pagehero__frame {
+    min-height: 230px;
   }
 }

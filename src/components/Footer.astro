@@ -1,4 +1,5 @@
 ---
+const { hideForm = false } = Astro.props;
 // src/components/Footer.astro
 
 const phoneDisplay = "+91 99669 33500";
@@ -42,17 +43,19 @@ const testimonials = [
 ];
 ---
 
-<footer class="kl-footer">
-  <div class="kl-footer__inner">
+<section class="kl-footer-wrapper">
+  <footer class="kl-footer">
     <div class="kl-footer__wrap">
 
-      <!-- ========== IMAGE PANEL (with form + text + callout) ========== -->
+      {/* ========== FOOTER HERO (FULL WIDTH BG, CONSTRAINED CONTENT) ========== */}
+      {!hideForm && (
       <section class="kl-footer-hero">
         <div class="kl-footer-hero__bg" aria-hidden="true"></div>
         <div class="kl-footer-hero__shade" aria-hidden="true"></div>
 
-        <div class="kl-footer-hero__grid">
-          <!-- Form Card -->
+        {/* ✅ content constrained like your other sections */}
+        <div class="kl-shell kl-footer-hero__grid">
+          {/* Form Card */}
           <div class="kl-quoteform" aria-label="Request a quote">
             <h3 class="kl-quoteform__title">Request a quote</h3>
 
@@ -85,555 +88,481 @@ const testimonials = [
               </div>
 
               <div class="kl-quoteform__actions">
-                <a class="kl-btn-primary" href="/contact">
-                  <span class="kl-btn-primary__label">Request a Quote</span>
-                  <span class="kl-btn-primary__icon" aria-hidden="true">↗</span>
-                </a>
+                <button type="submit" class="kl-btn-primary">
+  <span class="kl-btn-primary__text">Submit</span>
+  <span class="kl-btn-primary__icon">↗</span>
+</button>
               </div>
             </form>
           </div>
 
-          <!-- Right Content -->
+          {/* Right Content */}
           <div class="kl-footer-hero__content">
             <div class="kl-eyebrow">/ quote /</div>
+
             <h2 class="kl-footer-hero__title">Provide quick employee transport support</h2>
+
             <p class="kl-footer-hero__desc">
               Safe and punctual pick-up &amp; drop with route planning and shift-based scheduling for your team.
             </p>
+
+            {/* ✅ CTA placed exactly where you marked (under description) */}
+            <div class="kl-callout">
+            <div class="kl-callout__left">
+              <div class="kl-callout__big">Do you have<br />any questions?</div>
+            </div>
+            <div class="kl-callout__right">
+              <div class="kl-callout__small">Call us Now!</div>
+              <a class="kl-callout__phone" href={phoneHref}>{phoneDisplay}</a>
+            </div>
+          </div>
           </div>
         </div>
 
-        <!-- Callout -->
-        <div class="kl-callout">
-          <div class="kl-callout__left">
-            <div class="kl-callout__big">Do you have<br />any questions?</div>
-          </div>
-          <div class="kl-callout__right">
-            <div class="kl-callout__small">Call us today</div>
-            <a class="kl-callout__phone" href={phoneHref}>{phoneDisplay}</a>
-          </div>
-        </div>
+        {/* Callout (blue bar) */}
+        
+          
+        
       </section>
-
-      <!-- ========== DARK AREA (testimonial block) ========== -->
+)}
+      {/* ========== DARK AREA (everything constrained with kl-shell) ========== */}
       <section class="kl-footer-dark">
-        <div class="kl-footer-testimonials" data-twrap>
-          <!-- Left big outlined graphic (placeholder) -->
-          <div class="kl-footer-art" aria-hidden="true">
-            <svg viewBox="0 0 520 260">
-              <path
-                d="M50 60c0-25 20-45 45-45h130c25 0 45 20 45 45v70c0 25-20 45-45 45H150c-12 0-22 10-22 22v30c0 18-15 33-33 33H95c-25 0-45-20-45-45V60Z"
-                fill="none"
-                stroke="rgba(255,255,255,.18)"
-                stroke-width="3"
-              />
-              <path
-                d="M300 60c0-25 20-45 45-45h130c25 0 45 20 45 45v70c0 25-20 45-45 45H400c-12 0-22 10-22 22v30c0 18-15 33-33 33h0c-25 0-45-20-45-45V60Z"
-                fill="none"
-                stroke="rgba(255,255,255,.18)"
-                stroke-width="3"
-              />
-            </svg>
-          </div>
+        <div class="kl-shell">
 
-          <!-- Slider right -->
-          <div class="kl-footer-tbox">
-            <div class="kl-quote-mark" aria-hidden="true">
-              <svg viewBox="0 0 64 64">
-                <path d="M26 20c-8 2-14 10-14 20v8h18V30H20c1-6 5-9 10-10V12Zm26 0c-8 2-14 10-14 20v8h18V30H46c1-6 5-9 10-10V12Z" />
+          <div class="kl-footer-testimonials" data-twrap>
+            <div class="kl-footer-art" aria-hidden="true">
+              <svg viewBox="0 0 520 260">
+                <path
+                  d="M50 60c0-25 20-45 45-45h130c25 0 45 20 45 45v70c0 25-20 45-45 45H150c-12 0-22 10-22 22v30c0 18-15 33-33 33H95c-25 0-45-20-45-45V60Z"
+                  fill="none"
+                  stroke="rgba(255,255,255,.18)"
+                  stroke-width="3"
+                />
+                <path
+                  d="M300 60c0-25 20-45 45-45h130c25 0 45 20 45 45v70c0 25-20 45-45 45H400c-12 0-22 10-22 22v30c0 18-15 33-33 33h0c-25 0-45-20-45-45V60Z"
+                  fill="none"
+                  stroke="rgba(255,255,255,.18)"
+                  stroke-width="3"
+                />
               </svg>
             </div>
 
-            <div class="kl-ttrack" data-ttrack>
-              {testimonials.map((t) => (
-                <article class="kl-tcard" data-tslide>
-                  <p class="kl-ttext">{t.text}</p>
-                  <div class="kl-tmeta">
-                    <div class="kl-tname">{t.name}</div>
-                    <div class="kl-tcompany">{t.company}</div>
-                  </div>
-                </article>
-              ))}
-            </div>
-
-            <div class="kl-tbottom">
-              <div class="kl-tcount">
-                <span data-tcurrent>01</span>/<span data-ttotal>{String(testimonials.length).padStart(2, "0")}</span>
+            <div class="kl-footer-tbox">
+              <div class="kl-quote-mark" aria-hidden="true">
+                <svg viewBox="0 0 64 64">
+                  <path d="M26 20c-8 2-14 10-14 20v8h18V30H20c1-6 5-9 10-10V12Zm26 0c-8 2-14 10-14 20v8h18V30H46c1-6 5-9 10-10V12Z" />
+                </svg>
               </div>
-              <div class="kl-tbars">
-                {testimonials.map((_, i) => (
-                  <button
-                    class={`kl-tbar ${i === 0 ? "is-active" : ""}`}
-                    data-tdot
-                    data-idx={i}
-                    type="button"
-                    aria-label={`Testimonial ${i + 1}`}
-                  ></button>
+
+              <div class="kl-ttrack" data-ttrack>
+                {testimonials.map((t) => (
+                  <article class="kl-tcard" data-tslide>
+                    <p class="kl-ttext">{t.text}</p>
+                    <div class="kl-tmeta">
+                      <div class="kl-tname">{t.name}</div>
+                      <div class="kl-tcompany">{t.company}</div>
+                    </div>
+                  </article>
                 ))}
               </div>
-            </div>
-          </div>
-        </div>
 
-        <!-- ========== LINKS (3 columns) ========== -->
-        <div class="kl-footer-links">
-          <div class="kl-footer-links__grid">
-            <div class="kl-footer-col">
-              <a class="kl-footer-logo" href="/" aria-label="Home">KRISHNA LOGISTICS</a>
-              <div class="kl-footer-since" aria-hidden="true">since 2020</div>
-            </div>
-
-            <div class="kl-footer-col">
-              <h4 class="kl-footer-col__title">Contacts</h4>
-              <p class="kl-footer-col__text">{address}</p>
-              <a class="kl-footer-link" href={phoneHref}>{phoneDisplay}</a><br />
-              <a class="kl-footer-link" href={`mailto:${email}`}>{email}</a>
-            </div>
-
-            <div class="kl-footer-col">
-              <h4 class="kl-footer-col__title">Quick Links</h4>
-              <ul class="kl-footer-list">
-                {quickLinks.map((l) => (
-                  <li><a class="kl-footer-link" href={l.href}>{l.label}</a></li>
-                ))}
-              </ul>
-
-              <h4 class="kl-footer-col__title kl-mt">Services</h4>
-              <ul class="kl-footer-list">
-                {servicesLinks.map((l) => (
-                  <li><a class="kl-footer-link" href={l.href}>{l.label}</a></li>
-                ))}
-              </ul>
+              <div class="kl-tbottom">
+                <div class="kl-tcount">
+                  <span data-tcurrent>01</span>/<span data-ttotal>{String(testimonials.length).padStart(2, "0")}</span>
+                </div>
+                <div class="kl-tbars">
+                  {testimonials.map((_, i) => (
+                    <button
+                      class={`kl-tbar ${i === 0 ? "is-active" : ""}`}
+                      data-tdot
+                      data-idx={i}
+                      type="button"
+                      aria-label={`Testimonial ${i + 1}`}
+                    />
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
 
-          <div class="kl-footer-bottom">
-            <div>© {new Date().getFullYear()} Krishna Logistics. All rights reserved.</div>
-            <div>
-              Design &amp; Developed by{" "}
-              <a class="kl-footer-dev" href="https://codeboldtech.com/" target="_blank" rel="noopener noreferrer">
-                Codebold IT Solutions
-              </a>
+          <div class="kl-footer-links">
+            <div class="kl-footer-links__grid">
+              <div class="kl-footer-col">
+                <a class="kl-footer-logo" href="/" aria-label="Krishna Logistics Home">
+                  <img
+                    src="/images/logo/krishna-logistics-logo.webp"
+                    alt="Krishna Logistics"
+                    width="160"
+                    height="60"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </a>
+                <div class="kl-footer-since" aria-hidden="true">Since 2020</div>
+              </div>
+
+              <div class="kl-footer-col">
+                <h4 class="kl-footer-col__title">Contacts</h4>
+                <p class="kl-footer-col__text">{address}</p>
+                <a class="kl-footer-link" href={phoneHref}>{phoneDisplay}</a><br />
+                <a class="kl-footer-link" href={`mailto:${email}`}>{email}</a>
+              </div>
+
+              <div class="kl-footer-col">
+                <h4 class="kl-footer-col__title">Quick Links</h4>
+                <ul class="kl-footer-list">
+                  {quickLinks.map((l) => (
+                    <li><a class="kl-footer-link" href={l.href}>{l.label}</a></li>
+                  ))}
+                </ul>
+
+                <h4 class="kl-footer-col__title kl-mt">Services</h4>
+                <ul class="kl-footer-list">
+                  {servicesLinks.map((l) => (
+                    <li><a class="kl-footer-link" href={l.href}>{l.label}</a></li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+
+            <div class="kl-footer-bottom">
+              <div>© {new Date().getFullYear()} Krishna Logistics. All rights reserved.</div>
+              <div>
+                Design &amp; Developed by{" "}
+                <a
+                  class="kl-footer-dev"
+                  title="Best Website Design Company Near Me"
+                  href="https://codeboldtech.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Codebold IT Solutions
+                </a>
+              </div>
             </div>
           </div>
+
         </div>
       </section>
 
     </div>
-  </div>
 
-  <script is:inline>
-    (() => {
-      const wrap = document.querySelector("[data-twrap]");
-      if (!wrap) return;
+    <script is:inline>
+      (() => {
+        const wrap = document.querySelector("[data-twrap]");
+        if (!wrap) return;
 
-      const track = wrap.querySelector("[data-ttrack]");
-      const slides = Array.from(wrap.querySelectorAll("[data-tslide]"));
-      const dots = Array.from(wrap.querySelectorAll("[data-tdot]"));
-      const currentEl = wrap.querySelector("[data-tcurrent]");
-      const total = slides.length;
+        const track = wrap.querySelector("[data-ttrack]");
+        const slides = Array.from(wrap.querySelectorAll("[data-tslide]"));
+        const dots = Array.from(wrap.querySelectorAll("[data-tdot]"));
+        const currentEl = wrap.querySelector("[data-tcurrent]");
+        const total = slides.length;
 
-      let idx = 0;
-      let timer = null;
+        let idx = 0;
+        let timer = null;
 
-      const pad2 = (n) => String(n).padStart(2, "0");
+        const pad2 = (n) => String(n).padStart(2, "0");
 
-      const paint = () => {
-        track.style.transform = `translateX(-${idx * 100}%)`;
-        dots.forEach((d, i) => d.classList.toggle("is-active", i === idx));
-        if (currentEl) currentEl.textContent = pad2(idx + 1);
-      };
+        const paint = () => {
+          track.style.transform = `translateX(-${idx * 100}%)`;
+          dots.forEach((d, i) => d.classList.toggle("is-active", i === idx));
+          if (currentEl) currentEl.textContent = pad2(idx + 1);
+        };
 
-      const go = (n) => { idx = (n + total) % total; paint(); };
+        const go = (n) => { idx = (n + total) % total; paint(); };
 
-      const start = () => {
-        stop();
-        timer = window.setInterval(() => go(idx + 1), 5000);
-      };
+        const start = () => {
+          stop();
+          timer = window.setInterval(() => go(idx + 1), 5000);
+        };
 
-      const stop = () => { if (timer) window.clearInterval(timer); timer = null; };
+        const stop = () => { if (timer) window.clearInterval(timer); timer = null; };
 
-      dots.forEach((d) =>
-        d.addEventListener("click", () => {
-          go(parseInt(d.getAttribute("data-idx") || "0", 10));
-          start();
-        })
-      );
+        dots.forEach((d) =>
+          d.addEventListener("click", () => {
+            go(parseInt(d.getAttribute("data-idx") || "0", 10));
+            start();
+          })
+        );
 
-      wrap.addEventListener("mouseenter", stop);
-      wrap.addEventListener("mouseleave", start);
+        wrap.addEventListener("mouseenter", stop);
+        wrap.addEventListener("mouseleave", start);
 
-      paint();
-      start();
-    })();
-  </script>
+        paint();
+        start();
+      })();
+    </script>
 
-  <style>
-    /* =====================================================
-       FOOTER FRAME (match hero margins, no 100vw hacks)
-       ===================================================== */
-    .kl-footer{
-      margin: var(--frame-gap);
-      border-radius: var(--frame-radius);
-      overflow: hidden;
-      background: var(--kl-bg-dark);
-      padding: 0; /* ✅ remove extra padding that caused “cut” feeling */
-    }
+    <style>
+      /* =====================================================
+         FOOTER FRAME
+         ===================================================== */
+      .kl-footer-wrapper{
+        padding: 32px;
+      }
 
-    .kl-footer__inner{
-      margin-inline: auto;
-      padding: 0; /* ✅ wrapper controls spacing */
-    }
+      .kl-footer{
+        border-radius: 40px;
+        overflow: hidden;
+        background: var(--kl-bg-dark);
+      }
 
-    .kl-footer__wrap{
-      width: 100%;
-      margin: 0;
-      border-radius: inherit;
-      overflow: hidden;
-      background: transparent;
-    }
+      .kl-footer__wrap{ width: 100%; }
 
-    /* ===== IMAGE PANEL ===== */
-    .kl-footer-hero{
-      position: relative;
-      min-height: 36rem;
-      overflow: hidden;
+      /* ✅ global inner width helper */
+      .kl-shell{
+        width: min(1300px, calc(100% - 32px));
+        margin-inline: auto;
+      }
 
-      /* ✅ breathing space so callout never feels stuck */
-      padding-bottom: clamp(2.75rem, 5vw, 4.25rem);
-    }
+      @media (max-width: 768px){
+        .kl-footer-wrapper{ padding: 20px; }
+        .kl-shell{ width: calc(100% - 32px); }
+      }
 
-    .kl-footer-hero__bg{
-      position: absolute;
-      inset: 0;
-      background: url("/src/assets/images/home/Krishna-Logistics-Hero-3.webp") center/cover no-repeat;
-    }
+      /* =====================================================
+         FOOTER HERO (FULL WIDTH BG)
+         ===================================================== */
+      .kl-footer-hero{
+        position: relative;
+        overflow: hidden;
+        padding: clamp(2.5rem, 4vw, 4rem) 0 clamp(2.5rem, 4vw, 3.5rem);
+      }
 
-    .kl-footer-hero__shade{
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(
-        180deg,
-        rgba(0,0,0,.10) 0%,
-        rgba(0,0,0,.35) 45%,
-        rgba(30,27,24,.92) 78%,
-        rgba(30,27,24,1) 100%
-      );
-    }
+      .kl-footer-hero__bg,
+      .kl-footer-hero__shade{
+        position: absolute;
+        inset: 0;
+      }
 
-    .kl-footer-hero__grid{
-      position: relative;
-      display: grid;
-      grid-template-columns: 1.1fr 1fr;
-      gap: 2.5rem;
-      padding: 4.5rem 4.5rem 6.5rem;
-      align-items: start;
-    }
+      .kl-footer-hero__bg{
+        background: url("/images/footer/krishna-logistics-footer.webp") center/cover no-repeat;
+      }
 
-    /* form card */
-    .kl-quoteform{
-      background: #fff;
-      border-radius: 1.25rem;
-      padding: 1.6rem 1.6rem 1.4rem;
-      box-shadow: 0 1.25rem 3rem rgba(0,0,0,.35);
-      max-width: 32rem;
-    }
-    .kl-quoteform__title{
-      margin: 0 0 1.1rem;
-      font-size: 1.35rem;
-      font-weight: 800;
-    }
-    .kl-quoteform__grid{
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: .9rem;
-    }
-    .kl-in{
-      width: 100%;
-      border: 1px solid rgba(30,27,24,.22);
-      border-radius: .75rem;
-      padding: .85rem .9rem;
-      font-size: .95rem;
-      outline: none;
-      background: #fff;
-    }
-    .kl-in:focus{
-      border-color: var(--kl-secondary);
-      box-shadow: 0 0 0 .2rem rgba(62,146,204,.22);
-    }
-    .kl-quoteform__actions{ grid-column: 1/-1; padding-top: .25rem; }
+      .kl-footer-hero__shade{
+        background: linear-gradient(
+          180deg,
+          rgba(0,0,0,.10) 0%,
+          rgba(0,0,0,.35) 45%,
+          rgba(30,27,24,.92) 78%,
+          rgba(30,27,24,1) 100%
+        );
+      }
 
-    /* Date icon */
-    .kl-in--date-wrap{ position: relative; }
-    .kl-in--date{ padding-right: 2.75rem; appearance: none; }
-    .kl-in--date-icon{
-      position: absolute;
-      right: .9rem;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 1.25rem;
-      height: 1.25rem;
-      opacity: .6;
-      pointer-events: none;
-      background: url("/images/footer/calendar.svg") center/contain no-repeat;
-    }
-
-    /* right text */
-    .kl-eyebrow{
-      color: #fff;
-      opacity: .9;
-      font-weight: 700;
-      letter-spacing: .08em;
-      font-size: .875rem;
-    }
-    .kl-footer-hero__title{
-      margin: .75rem 0 0;
-      color: #fff;
-      font-size: clamp(2rem, 3vw, 3.1rem);
-      line-height: 1.05;
-      letter-spacing: -.02em;
-    }
-    .kl-footer-hero__desc{
-      margin-top: 1rem;
-      color: rgba(255,255,255,.85);
-      font-size: 1rem;
-      line-height: 1.7;
-      max-width: 28rem;
-    }
-
-    /* ✅ CALLOUT (moved up + responsive clamp) */
-    .kl-callout{
-      position: absolute;
-      right: 3.5rem;
-
-      /* moved up a bit so it “floats” */
-      bottom: clamp(2rem, 3.5vw, 3rem);
-
-      background: var(--kl-primary);
-      color: #fff;
-      border-radius: 1.25rem;
-      padding: 1.35rem 1.6rem;
-      display: flex;
-      align-items: center;
-      gap: 2.2rem;
-      min-width: min(40rem, 60%);
-      z-index: 2;
-    }
-    .kl-callout__big{
-      font-weight: 900;
-      font-size: 1.35rem;
-      line-height: 1.15;
-    }
-    .kl-callout__small{ opacity: .9; font-weight: 700; }
-    .kl-callout__phone{
-      color: #fff;
-      text-decoration: none;
-      font-weight: 900;
-      font-size: 1.9rem;
-      white-space: nowrap;
-    }
-
-    /* ===== DARK AREA ===== */
-    .kl-footer-dark{
-      background: var(--kl-bg-dark);
-      padding: 3rem 3.5rem 2.5rem;
-    }
-
-    .kl-footer-testimonials{
-      display: grid;
-      grid-template-columns: 1.05fr 1fr;
-      gap: 2.5rem;
-      align-items: end;
-      padding: 3rem 0 5rem 0;
-    }
-    .kl-footer-art svg{ width: 100%; height: auto; }
-
-    .kl-footer-tbox{ position: relative; overflow: hidden; }
-    .kl-quote-mark{
-      position: absolute;
-      right: 0;
-      top: 0;
-      width: 3.25rem;
-      height: 3.25rem;
-      opacity: .22;
-    }
-    .kl-quote-mark svg{ width: 100%; height: 100%; fill: #fff; }
-
-    .kl-ttrack{ display: flex; transform: translateX(0); transition: transform .55s ease; }
-    .kl-tcard{ flex: 0 0 100%; padding-right: 1rem; }
-    .kl-ttext{ color: rgba(255,255,255,.9); font-size: 2rem; line-height: 1.9; }
-    .kl-tmeta{ margin-top: 1rem; }
-    .kl-tname{ color: #fff; font-weight: 900; font-size: .95rem; }
-    .kl-tcompany{ color: rgba(255,255,255,.7); font-size: .9rem; }
-
-    .kl-tbottom{
-      margin-top: 1.2rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
-    }
-    .kl-tcount{ color: rgba(255,255,255,.85); font-weight: 900; letter-spacing: .06em; }
-    .kl-tbars{ display: inline-flex; gap: .55rem; }
-    .kl-tbar{
-      width: 2.4rem;
-      height: .18rem;
-      border: 0;
-      border-radius: 999px;
-      background: rgba(255,255,255,.25);
-      cursor: pointer;
-    }
-    .kl-tbar.is-active{ background: var(--kl-secondary); }
-
-    /* links */
-    .kl-footer-links{ margin-top: 3rem; }
-    .kl-footer-links__grid{
-      display: grid;
-      grid-template-columns: 1.1fr 1fr 1fr;
-      gap: 2.5rem;
-    }
-    .kl-footer-logo{
-      color: #fff;
-      text-decoration: none;
-      font-weight: 900;
-      letter-spacing: .03em;
-      display: inline-block;
-    }
-    .kl-footer-since{
-      margin-top: 1.25rem;
-      font-size: clamp(3rem, 5vw, 4.2rem);
-      font-weight: 900;
-      color: transparent;
-      -webkit-text-stroke: 1px rgba(255,255,255,.2);
-      text-transform: lowercase;
-    }
-    .kl-footer-col__title{
-      margin: 0 0 .85rem;
-      color: #fff;
-      font-size: 1.05rem;
-      font-weight: 900;
-    }
-    .kl-footer-col__text{
-      color: rgba(255,255,255,.75);
-      line-height: 1.7;
-      margin: 0 0 .85rem;
-      font-size: .95rem;
-    }
-    .kl-footer-list{
-      list-style: none;
-      padding: 0;
-      margin: 0;
-      display: grid;
-      gap: .55rem;
-    }
-    .kl-footer-link{
-      color: rgba(255,255,255,.88);
-      text-decoration: none;
- 
-    }
-    .kl-footer-link:hover{ color: var(--kl-secondary); }
-    .kl-mt{ margin-top: 1.25rem; }
-
-    .kl-footer-bottom{
-      margin-top: 2.25rem;
-      padding-top: 1.25rem;
-      border-top: 1px solid rgba(255,255,255,.08);
-      display: flex;
-      justify-content: space-between;
-      gap: 1rem;
-      color: rgba(255,255,255,.75);
-      font-size: .92rem;
-    }
-    .kl-footer-dev{ color: #fff; text-decoration: none; font-weight: 900; }
-    .kl-footer-dev:hover{ color: var(--kl-secondary); }
-
-    /* responsive */
-    @media (max-width: 64rem){
       .kl-footer-hero__grid{
-        grid-template-columns: 1fr;
-        padding: 2.5rem 1.5rem 7.5rem;
-        gap: 1.25rem;
+        position: relative;
+        display: grid;
+        grid-template-columns: 1.05fr 1fr;
+        gap: clamp(1.5rem, 3vw, 2.5rem);
+        align-items: start;
+        z-index: 1;
       }
+
+      /* form styles moved to global.css */
+
+/* right text */
+      .kl-footer-hero__content{ padding-top: .25rem; }
+      .kl-eyebrow{
+        color: #fff;
+        font-size: 14px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+      }
+      .kl-footer-hero__title{
+        margin: .75rem 0 0;
+        color: #fff;
+        font-size: clamp(2rem, 3vw, 3.1rem);
+        line-height: 1.05;
+        letter-spacing: -.02em;
+      }
+      .kl-footer-hero__desc{
+        margin-top: 1rem;
+        color: rgba(255,255,255,.85);
+        font-size: 1.25rem;
+        line-height: 1.7;
+        max-width: 34rem;
+      }
+     
+
+      /* callout */
       .kl-callout{
-        left: 1.5rem;
-        right: 1.5rem;
-        bottom: 1.5rem;
-        min-width: auto;
+        position: relative;
+        z-index: 2;
+        margin-top: clamp(1.5rem, 3vw, 2.25rem);
+        background: var(--kl-primary);
+        color: #fff;
+        border-radius: 1.25rem;
+        padding: 1.35rem 1.6rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 2rem;
       }
-      .kl-footer-dark{ padding: 2.5rem 1.5rem 2rem; }
-      .kl-footer-testimonials{ grid-template-columns: 1fr; gap: 1.5rem; }
-      .kl-footer-links__grid{ grid-template-columns: 1fr; gap: 1.5rem; }
-      .kl-footer-bottom{ flex-direction: column; align-items: flex-start; }
-    }
-    /* Callout responsive stacking at 610px */
-@media (max-width: 610px) {
-  .kl-callout {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.75rem;
-  }
+      .kl-callout__big{
+        font-weight: 900;
+        font-size: 1.35rem;
+        line-height: 1.15;
+      }
+      .kl-callout__small{ opacity: .9; font-weight: 700; }
+      .kl-callout__phone{
+        color: #fff;
+        text-decoration: none;
+        font-weight: 900;
+        font-size: 1.9rem;
+        white-space: nowrap;
+      }
 
-  .kl-callout__left,
-  .kl-callout__right {
-    width: 100%;
-  }
+      /* =====================================================
+         DARK AREA
+         ===================================================== */
+      .kl-footer-dark{
+        background: var(--kl-bg-dark);
+        padding: 0 0rem 3rem 2.5rem;
+      }
 
-  .kl-callout__right {
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
-  }
+      .kl-footer-testimonials{
+        display: grid;
+        grid-template-columns: 1.05fr 1fr;
+        gap: 2.5rem;
+        align-items: end;
+        padding: 2.5rem 0 4.5rem;
+      }
 
-  .kl-callout__small {
-    font-size: 0.9rem;
-    opacity: 0.9;
-  }
-
-  .kl-callout__phone {
-    font-size: 1.4rem;
-  }
-  .kl-ttext {
-  font-size: 1.5rem;
-  line-height: 1.4;
-}
-.kl-footer-hero__desc {
-margin-bottom: 4rem;
-}
-.kl-footer-art {
-  width: 33%;
-}
-.kl-footer-testimonials {
-  padding: 0;
-}
-.kl-footer-logo {
-  font-size: 25px;
-}
-.kl-quoteform {
-    max-width: 100%;
-  }
-
-  .kl-quoteform__grid {
-    grid-template-columns: 1fr; /* ✅ 1 column */
-    gap: 0.8rem;
-  }
-
-  .kl-quoteform__actions {
-    grid-column: 1 / -1; /* keeps button full width */
-  }
-
-  .kl-in {
-    width: 100%;
-    min-width: 0; /* ✅ prevents overflow inside grid */
-  }
-
-  /* Date field icon spacing */
-  .kl-in--date {
-    padding-right: 3rem;
-  }
-  .kl-in--date-icon {
-    right: 1rem;
-  }
+      .kl-footer-art{
+  width: clamp(160px, 28vw, 520px);  /* responsive width */
+  max-width: 100%;
 }
 
-  </style>
-</footer>
+/* Make SVG scale with the container */
+.kl-footer-art svg{
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+      .kl-footer-tbox{ position: relative; overflow: hidden; }
+      .kl-quote-mark{
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: 3.25rem;
+        height: 3.25rem;
+        opacity: .22;
+      }
+      .kl-quote-mark svg{ width: 100%; height: 100%; fill: #fff; }
+
+      .kl-ttrack{ display: flex; transform: translateX(0); transition: transform .55s ease; }
+      .kl-tcard{ flex: 0 0 100%; padding-right: 1rem; }
+      .kl-ttext{ color: rgba(255,255,255,.9); font-size: clamp(1.35rem, 2.2vw, 2rem); line-height: 1.55; }
+      .kl-tmeta{ margin-top: 1rem; }
+      .kl-tname{ color: #fff; font-weight: 900; font-size: .95rem; }
+      .kl-tcompany{ color: rgba(255,255,255,.7); font-size: .9rem; }
+
+      .kl-tbottom{
+        margin-top: 1.2rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+      }
+      .kl-tcount{ color: rgba(255,255,255,.85); font-weight: 900; letter-spacing: .06em; }
+      .kl-tbars{ display: inline-flex; gap: .55rem; }
+      .kl-tbar{
+        width: 2.4rem;
+        height: .18rem;
+        border: 0;
+        border-radius: 999px;
+        background: rgba(255,255,255,.25);
+        cursor: pointer;
+      }
+      .kl-tbar.is-active{ background: var(--kl-secondary); }
+
+      /* links */
+      .kl-footer-links{ margin-top: 2.75rem; }
+      .kl-footer-links__grid{
+        display: grid;
+        grid-template-columns: 1.1fr 1fr 1fr;
+        gap: 2.5rem;
+      }
+
+      .kl-footer-logo img{ display: block; height: auto; }
+      .kl-footer-since{
+        margin-top: 1.25rem;
+        font-size: clamp(3rem, 5vw, 4.2rem);
+        font-weight: 900;
+        color: transparent;
+        -webkit-text-stroke: 1px rgba(255,255,255,.2);
+        text-transform: lowercase;
+      }
+
+      .kl-footer-col__title{
+        margin: 0 0 .85rem;
+        color: #fff;
+        font-size: 1.05rem;
+        font-weight: 900;
+      }
+
+      .kl-footer-col__text{
+        color: rgba(255,255,255,.75);
+        line-height: 1.7;
+        margin: 0 0 .85rem;
+        font-size: .95rem;
+      }
+
+      .kl-footer-list{
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: grid;
+        gap: .55rem;
+      }
+
+      .kl-footer-link{
+        color: rgba(255,255,255,.88);
+        text-decoration: none;
+      }
+      .kl-footer-link:hover{ color: var(--kl-secondary); }
+      .kl-mt{ margin-top: 1.25rem; }
+
+      .kl-footer-bottom{
+        margin-top: 2.25rem;
+        padding: 2rem 0;
+        border-top: 1px solid rgba(255,255,255,.08);
+        display: flex;
+        justify-content: space-between;
+        gap: 1rem;
+        color: rgba(255,255,255,.75);
+        font-size: .92rem;
+      }
+      .kl-footer-dev{ color: #fff; text-decoration: none; font-weight: 900; }
+      .kl-footer-dev:hover{ color: var(--kl-secondary); }
+
+      /* =====================================================
+         RESPONSIVE
+         ===================================================== */
+      @media (max-width: 64rem){
+        .kl-footer-hero__grid{ grid-template-columns: 1fr; }
+        .kl-quoteform__grid{ grid-template-columns: 1fr; }
+        .kl-footer-testimonials{ grid-template-columns: 1fr; gap: 1.5rem; padding-bottom: 3rem; }
+        .kl-footer-links__grid{ grid-template-columns: 1fr; gap: 1.5rem; }
+        .kl-footer-bottom{ flex-direction: column; align-items: flex-start; }
+        .kl-footer-art{
+    width: clamp(140px, 55vw, 360px);
+    margin: 0 auto;   /* centers when stacked */
+  }
+      }
+
+      @media (max-width: 610px){
+        .kl-callout{
+          flex-direction: column;
+          align-items: flex-start;
+          gap: .75rem;
+        }
+        .kl-callout__phone{ font-size: 1.4rem; }
+      }
+      .kl-footer-dark {
+            padding: 0 1rem 0rem 1rem;
+      }
+    </style>
+  </footer>
+</section>

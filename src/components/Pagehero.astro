@@ -1,0 +1,38 @@
+---
+const { title = "Page Title", bgImage = "", crumbs = [] } = Astro.props;
+---
+
+<section class="kl-pagehero">
+  <div class="kl-pagehero__frame">
+    <div
+      class="kl-pagehero__bg"
+      style={bgImage ? `background-image:url(${bgImage});` : ""}
+      aria-hidden="true"
+    ></div>
+
+    <div class="kl-pagehero__overlay" aria-hidden="true"></div>
+
+    <!-- 1300px inner container -->
+    <div class="kl-pagehero__content">
+      <div class="kl-container kl-pagehero__inner">
+        <h1 class="kl-pagehero__title">{title}</h1>
+
+        <!-- Breadcrumb pill (bottom-left like screenshot) -->
+        {crumbs?.length ? (
+          <div class="kl-pagehero__crumbs" aria-label="Breadcrumb">
+            {crumbs.map((c, i) => (
+              <>
+                {c.href ? (
+                  <a class="kl-pagehero__link" href={c.href}>{c.label}</a>
+                ) : (
+                  <span class="kl-pagehero__current">{c.label}</span>
+                )}
+                {i < crumbs.length - 1 && <span class="kl-pagehero__sep">/</span>}
+              </>
+            ))}
+          </div>
+        ) : null}
+      </div>
+    </div>
+  </div>
+</section>

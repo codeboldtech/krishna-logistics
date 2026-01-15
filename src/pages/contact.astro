@@ -1,0 +1,119 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Pagehero from "../components/Pagehero.astro";
+
+const crumbs = [
+  { label: "Home", href: "/" },
+  { label: "Contact Us" },
+];
+
+const heroBg = "/images/page/krishna-logistics-page-template.webp";
+
+const phoneDisplay = "+91 99669 33500";
+const phoneHref = "tel:+919966933500";
+const email = "kanishk@krishnalogistics.com";
+const address =
+  "Krishna Logistics, 3-3-134, Moti Market, Kachiguda, Hyderabad - 500027";
+---
+
+<BaseLayout title="Contact Us" hideFooterForm={true}>
+  <Pagehero title="Contact Us" bgImage={heroBg} crumbs={crumbs} />
+
+  <section class="kl-section kl-contact">
+    <div class="kl-container">
+      <div class="kl-contact__grid">
+        <!-- LEFT -->
+        <div class="kl-contact__left">
+          <div class="kl-contact__map" aria-hidden="true"></div>
+
+          <div class="kl-contact__leftInner">
+            <h2>We are always ready to help you and answer your questions</h2>
+
+            <p>
+              Share your requirements and we’ll respond with a clear transport plan and quote.
+              For urgent needs, call us directly — our team will guide you quickly.
+            </p>
+
+            <div class="kl-contact__infoGrid">
+              <div class="kl-contactInfo">
+                <h3>Call Center</h3>
+                <p><a href={phoneHref}>{phoneDisplay}</a></p>
+              </div>
+
+              <div class="kl-contactInfo">
+                <h3>Our Location</h3>
+                <p>{address}</p>
+              </div>
+
+              <div class="kl-contactInfo">
+                <h3>Email</h3>
+                <p><a href={`mailto:${email}`}>{email}</a></p>
+              </div>
+
+              <div class="kl-contactInfo">
+                <h3>Social network</h3>
+                <div class="kl-contact__social">
+                  <a class="kl-socialBtn" href="#" aria-label="Facebook">f</a>
+                  <a class="kl-socialBtn" href="#" aria-label="X">x</a>
+                  <a class="kl-socialBtn" href="#" aria-label="LinkedIn">in</a>
+                  <a class="kl-socialBtn" href="#" aria-label="YouTube">▶</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT -->
+        <div class="kl-contact__right">
+          <div class="kl-quoteform kl-contactCard">
+  <h3 class="kl-quoteform__title">Request a quote</h3>
+
+  <form class="kl-quoteform__grid" action="#" method="post">
+    <input class="kl-in" type="text" name="name" placeholder="Full name" />
+    <input class="kl-in" type="email" name="email" placeholder="Email" />
+    <input class="kl-in" type="tel" name="phone" placeholder="Phone" />
+    <input class="kl-in" type="text" name="company" placeholder="Company" />
+    <input class="kl-in" type="text" name="pickup" placeholder="Pickup location" />
+    <input class="kl-in" type="text" name="drop" placeholder="Drop location" />
+
+    <select class="kl-in" name="type">
+      <option>Transport Type</option>
+      <option>Employee Transport</option>
+      <option>Corporate Transport Solutions</option>
+    </select>
+
+    <select class="kl-in" name="shift">
+      <option>Shift Timing</option>
+      <option>Day Shift</option>
+      <option>Night Shift</option>
+      <option>Rotational</option>
+    </select>
+
+    <input class="kl-in" type="text" name="count" placeholder="Employees count" />
+
+    <div class="kl-in--date-wrap">
+      <input
+        class="kl-in kl-in--date"
+        type="date"
+        name="start"
+        aria-label="Start date"
+      />
+      <span class="kl-in--date-icon" aria-hidden="true"></span>
+    </div>
+
+    <div class="kl-quoteform__actions">
+      <button class="kl-btn-primary" type="submit">
+        <span class="kl-btn-primary__text">Request a Quote</span>
+        <span class="kl-btn-primary__icon" aria-hidden="true">↗</span>
+      </button>
+    </div>
+  </form>
+</div>
+
+        </div>
+
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+

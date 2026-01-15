@@ -1,0 +1,139 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Pagehero from "../components/Pagehero.astro";
+
+const heroBg = "/images/page/krishna-logistics-page-template.webp";
+const s1Img = "/images/services/Krishna-logistics-employee-transport.webp";
+const s2Img = "/images/services/Krishna-logistics-corporate-transport-solutions.webp";
+const s3Img = "/images/services/Krishna-logistics-fleet-management.webp";
+
+const crumbs = [
+  { label: "Home", href: "/" },
+  { label: "Services" },
+];
+---
+
+<BaseLayout title="Services | Krishna Logistics">
+  <Pagehero title="Services" bgImage={heroBg} crumbs={crumbs} />
+
+  <!-- 1) Intro -->
+  <section class="kl-section kl-svcIntro">
+    <div class="kl-container">
+      <div class="kl-svcIntro__inner">
+        <h2>Corporate Transportation Services Built for Reliability</h2>
+        <p>
+          Krishna Logistics delivers structured corporate transportation solutions designed to support growing organizations. Our services focus on punctual employee movement, safety-first execution, and disciplined routing. With a strong understanding of corporate operations and shift-based requirements, we help businesses reduce commute challenges, improve attendance consistency, and ensure employees travel comfortably and reliably every day.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2) Image Left / Content Right -->
+  <section id="employee-transport" class="kl-section kl-svcSplit">
+    <div class="kl-container">
+      <div class="kl-svcSplit__grid">
+        <div class="kl-svcSplit__media">
+          <img class="kl-svcSplit__img" src={s1Img} alt="Employee transport services" loading="lazy" />
+        </div>
+
+        <div class="kl-svcSplit__content">
+          <span class="kl-svcEyebrow">/ Our Core Service /</span>
+          <h2>Employee Transport</h2>
+          <p>
+            Our employee transport service is designed to manage daily office commutes with precision and care. We operate scheduled pickup and drop routines supported by trained drivers and well-maintained vehicles. By following structured routes and fixed timelines, we help organizations maintain workforce punctuality while offering employees a safe, comfortable, and stress-free commuting experience across all working shifts.
+          </p>
+
+          <div class="kl-svcSplit__card">
+            <h3>What’s included</h3>
+            <ul class="kl-svcSplit__list">
+              <li>Shift-based pickup & drop planning</li>
+              <li>Consistent routing and timing discipline</li>
+              <li>Professional drivers with safety focus</li>
+              <li>Support coordination for smooth operations</li>
+            </ul>
+          </div>
+
+          <div class="kl-svcSplit__cta">
+            <a href="/contact" class="kl-btn-primary">
+  <span class="kl-btn-primary__text">Get a Quote</span>
+  <span class="kl-btn-primary__icon">↗</span>
+</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3) Content Left / Image Right -->
+  <section id="corporate-solutions" class="kl-section kl-svcSplit kl-svcSplit--reverse">
+    <div class="kl-container">
+      <div class="kl-svcSplit__grid">
+        <div class="kl-svcSplit__media">
+          <img class="kl-svcSplit__img" src={s2Img} alt="Corporate transport solutions" loading="lazy" />
+        </div>
+
+        <div class="kl-svcSplit__content">
+          <span class="kl-svcEyebrow">/ Our Core Service /</span>
+          <h2>Corporate Transport Solutions</h2>
+          <p>
+            Krishna Logistics provides end-to-end transport coordination for organizations that require a dependable mobility system. Our corporate transport solutions are aligned with internal processes, shift patterns, and operational requirements. We work closely with businesses to design transport structures that support scalability, reliability, and professional service delivery across teams of all sizes.
+          </p>
+
+          <div class="kl-svcSplit__card">
+            <h3>Best suited for</h3>
+            <ul class="kl-svcSplit__list">
+              <li>Organizations with growing teams</li>
+              <li>Shift-based workforce schedules</li>
+              <li>Companies needing consistent transport SOPs</li>
+              <li>Professional coordination and reporting needs</li>
+            </ul>
+          </div>
+
+          <div class="kl-svcSplit__cta">
+            <a href="/contact" class="kl-btn-primary">
+  <span class="kl-btn-primary__text">Get a Quote</span>
+  <span class="kl-btn-primary__icon">↗</span>
+</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4) Image Left / Content Right -->
+  <section id="fleet" class="kl-section kl-svcSplit">
+    <div class="kl-container">
+      <div class="kl-svcSplit__grid">
+        <div class="kl-svcSplit__media">
+          <img class="kl-svcSplit__img" src={s3Img} alt="Fleet and route management" loading="lazy" />
+        </div>
+
+        <div class="kl-svcSplit__content">
+          <span class="kl-svcEyebrow">/ Our Core Service /</span>
+          <h2>Fleet & Route Management</h2>
+          <p>
+            Our fleet and route management services focus on maintaining smooth daily transport operations through disciplined planning and execution. We design practical routes, monitor fleet readiness, and ensure vehicles are prepared for consistent usage. This structured approach allows organizations to maintain predictable employee movement while reducing operational disruptions and ensuring transport reliability at scale.
+          </p>
+
+          <div class="kl-svcSplit__card">
+            <h3>Operational focus</h3>
+            <ul class="kl-svcSplit__list">
+              <li>Route planning for time efficiency</li>
+              <li>Fleet readiness and maintenance discipline</li>
+              <li>Daily execution monitoring and coordination</li>
+              <li>Scalable operations for corporate needs</li>
+            </ul>
+          </div>
+
+          <div class="kl-svcSplit__cta">
+            <a href="/contact" class="kl-btn-primary">
+  <span class="kl-btn-primary__text">Get a Quote</span>
+  <span class="kl-btn-primary__icon">↗</span>
+</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+

@@ -12,8 +12,8 @@ const {
       text: "Dedicated support for offices, factories, and sites with flexible vehicle options and coordination.",
     },
   ],
-  ctaText = "Explore more",
-  ctaHref = "/services",
+  ctaText = "About Us",
+  ctaHref = "/about",
   imageSrc = "/images/home/Krishna-Logistics-HM-What-We-Do.webp", // replace later
   imageAlt = "Krishna Logistics service image",
 } = Astro.props;
@@ -26,10 +26,10 @@ const {
     </div>
 
     <div class="kl-wwd__content">
-      <div class="kl-wwd__eyebrow">{eyebrow}</div>
+      <div class="kl-services__eyebrow">{eyebrow}</div>
       <div class="kl-wwd__rule" aria-hidden="true"></div>
 
-      <h2 class="kl-wwd__title">{title}</h2>
+      <h2 >{title}</h2>
 
       <div class="kl-wwd__list">
         {items.map((it) => (

@@ -1,0 +1,53 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Pagehero from "../components/Pagehero.astro";
+import StatsMarquee from "../components/StatsMarquee.astro";
+
+const crumbs = [
+  { label: "Home", href: "/" },
+  { label: "About Us", href: "#" },
+];
+---
+
+<BaseLayout title="About Us | Krishna Logistics">
+  <Pagehero title="About Us" bgImage="/images/page/krishna-logistics-page-template.webp" crumbs={crumbs} />
+
+  <!-- About Intro -->
+  <section class="kl-section kl-aboutIntro">
+    <div class="kl-container">
+      <div class="kl-aboutIntro__grid">
+        
+        <!-- LEFT: Heading (no custom font-size) -->
+        <h2>
+          Reliable Transportation Solutions Built for Corporate Mobility
+        </h2>
+
+        <!-- RIGHT: Content (no font-size, no font-family) -->
+        <div class="kl-aboutIntro__content">
+          <p>
+            Krishna Logistics is a corporate transportation partner focused on delivering safe,
+            punctual, and well-managed employee commute solutions. We work closely with
+            organizations to ensure daily travel is smooth, predictable, and stress-free.
+          </p>
+
+          <p>
+            Our services are designed around structured routing, disciplined fleet operations,
+            and professional coordination. From employee transport to corporate mobility planning,
+            we support businesses with transportation systems that scale with their workforce.
+          </p>
+
+          <p>
+            With experienced drivers, real-time coordination, and a commitment to safety,
+            Krishna Logistics helps companies maintain productivity by ensuring their teams
+            arrive on time — every day.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats Marquee -->
+  <StatsMarquee />
+</BaseLayout>
+

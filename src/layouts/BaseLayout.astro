@@ -9,6 +9,7 @@ const {
   title = "Krishna Logistics",
   description = "Reliable employee transport solutions for companies. You Choose it.",
   ogImage = "/og-placeholder.png",
+  hideFooterForm = false, // ✅ NEW PROP
 } = Astro.props;
 ---
 
@@ -27,7 +28,7 @@ const {
     <meta property="og:type" content="website" />
 
     <!-- Favicon placeholder -->
-    <link rel="icon" href="/favicon.png" />
+    <link rel="icon" href="/fevicon.png" />
 
     <!-- ✅ Correct Global Fonts (Inter + IBM Plex Sans) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -45,7 +46,8 @@ const {
       <slot />
     </main>
 
-    <Footer />
+    <!-- ✅ Footer with conditional form support -->
+    <Footer hideForm={hideFooterForm} />
 
     <FloatingWhatsapp />
     <ScrollToTop />
