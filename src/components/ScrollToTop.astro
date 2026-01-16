@@ -1,36 +1,28 @@
 <button class="kl-top" type="button" aria-label="Back to top">↑</button>
 
-<style>
-  .kl-top { opacity: 0; pointer-events: none; transition: opacity .2s ease; }
-  .kl-top.show { opacity: 1; pointer-events: auto; }
-</style>
-
 <script is:inline>
   const SHOW_AFTER = 300;
-
   const btn = document.querySelector(".kl-top");
 
   function toggle() {
     if (!btn) return;
-
     if (window.scrollY > SHOW_AFTER) btn.classList.add("is-visible");
     else btn.classList.remove("is-visible");
   }
 
-  btn?.addEventListener("click", () =>
-    window.scrollTo({ top: 0, behavior: "smooth" })
-  );
+  btn?.addEventListener("click", () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  });
 
   window.addEventListener("scroll", toggle);
   toggle();
 </script>
 
-
 <style>
   .kl-top{
     position: fixed;
-    left: 18px;        /* ✅ LEFT SIDE */
-    bottom: 88px;      /* above cookie bar */
+    left: 18px;
+    bottom: 88px;
     z-index: 1150;
 
     width: 46px;
@@ -70,7 +62,6 @@
     transform: translateY(-2px);
   }
 
-  /* Mobile spacing */
   @media (max-width: 640px){
     .kl-top{
       left: 14px;

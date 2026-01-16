@@ -1,0 +1,37 @@
+<script is:inline>
+  document.addEventListener("DOMContentLoaded", () => {
+    const forms = document.querySelectorAll('form[action="/api/quote"][method="POST"]');
+
+    forms.forEach((form) => {
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        // clear honeypot if exists
+        const hp = form.querySelector('input[name="website"]');
+        if (hp) hp.value = "";
+
+        try {
+          const res = await fetch("/api/quote", {
+            method: "POST",
+            headers: { "Accept": "application/json" },
+            body: new FormData(form),
+          });
+
+          const data = await res.json().catch(() => ({}));
+
+          // redirect ONLY when backend confirms success
+          if (res.ok && data.ok === true) {
+            window.location.href = "/thank-you/";
+            return;
+          }
+
+          console.log("Quote API failed:", res.status, data);
+          alert("Not sent. Please try again.");
+        } catch (err) {
+          console.log("Network error:", err);
+          alert("Network error. Please try again.");
+        }
+      });
+    });
+  });
+</script>
