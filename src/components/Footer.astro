@@ -257,50 +257,68 @@ const testimonials = [
     </div>
 
     <script is:inline>
-      (() => {
-        const wrap = document.querySelector("[data-twrap]");
-        if (!wrap) return;
+  function initFooterTestimonials() {
+    const wrap = document.querySelector("[data-twrap]");
+    if (!wrap) return;
 
-        const track = wrap.querySelector("[data-ttrack]");
-        const slides = Array.from(wrap.querySelectorAll("[data-tslide]"));
-        const dots = Array.from(wrap.querySelectorAll("[data-tdot]"));
-        const currentEl = wrap.querySelector("[data-tcurrent]");
-        const total = slides.length;
+    // ✅ prevent double-binding after transitions
+    if (wrap.dataset.klBound === "1") return;
+    wrap.dataset.klBound = "1";
 
-        let idx = 0;
-        let timer = null;
+    const track = wrap.querySelector("[data-ttrack]");
+    const slides = Array.from(wrap.querySelectorAll("[data-tslide]"));
+    const dots = Array.from(wrap.querySelectorAll("[data-tdot]"));
+    const currentEl = wrap.querySelector("[data-tcurrent]");
+    const total = slides.length;
 
-        const pad2 = (n) => String(n).padStart(2, "0");
+    if (!track || total === 0) return;
 
-        const paint = () => {
-          track.style.transform = `translateX(-${idx * 100}%)`;
-          dots.forEach((d, i) => d.classList.toggle("is-active", i === idx));
-          if (currentEl) currentEl.textContent = pad2(idx + 1);
-        };
+    let idx = 0;
 
-        const go = (n) => { idx = (n + total) % total; paint(); };
+    const pad2 = (n) => String(n).padStart(2, "0");
 
-        const start = () => {
-          stop();
-          timer = window.setInterval(() => go(idx + 1), 5000);
-        };
+    const paint = () => {
+      track.style.transform = `translateX(-${idx * 100}%)`;
+      dots.forEach((d, i) => d.classList.toggle("is-active", i === idx));
+      if (currentEl) currentEl.textContent = pad2(idx + 1);
+    };
 
-        const stop = () => { if (timer) window.clearInterval(timer); timer = null; };
+    const go = (n) => {
+      idx = (n + total) % total;
+      paint();
+    };
 
-        dots.forEach((d) =>
-          d.addEventListener("click", () => {
-            go(parseInt(d.getAttribute("data-idx") || "0", 10));
-            start();
-          })
-        );
+    // ✅ store timer on element so it doesn't duplicate
+    const stop = () => {
+      if (wrap._klTimer) {
+        window.clearInterval(wrap._klTimer);
+        wrap._klTimer = null;
+      }
+    };
 
-        wrap.addEventListener("mouseenter", stop);
-        wrap.addEventListener("mouseleave", start);
+    const start = () => {
+      stop();
+      wrap._klTimer = window.setInterval(() => go(idx + 1), 5000);
+    };
 
-        paint();
+    dots.forEach((d) => {
+      d.addEventListener("click", () => {
+        go(parseInt(d.getAttribute("data-idx") || "0", 10));
         start();
-      })();
-    </script>
+      });
+    });
+
+    wrap.addEventListener("mouseenter", stop);
+    wrap.addEventListener("mouseleave", start);
+
+    paint();
+    start();
+  }
+
+  // ✅ Runs on first load + after every Astro page transition
+  document.addEventListener("astro:page-load", initFooterTestimonials);
+</script>
+
 
     <style>
       /* =====================================================
