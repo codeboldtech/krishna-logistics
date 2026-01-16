@@ -125,3 +125,4 @@ return new Response(
   ),
   { status: 200, headers: { "Content-Type": "application/json" } }
 );
+return new Response("DEBUG DEPLOY CHECK OK", { status: 200 });
