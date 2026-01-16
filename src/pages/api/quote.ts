@@ -1,91 +1,106 @@
 import type { APIRoute } from "astro";
 export const prerender = false;
 
+// escape HTML (email safety)
 function esc(s: string) {
-  return s.replace(/[&<>"']/g, (c) =>
-    ({
-      "&": "&amp;",
-      "<": "&lt;",
-      ">": "&gt;",
-      '"': "&quot;",
-      "'": "&#039;",
-    }[c] as string)
-  );
+  return s.replace(/[&<>"']/g, (c) => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#039;",
+  }[c] as string));
 }
 
-export const POST: APIRoute = async ({ request }) => {
+export const POST: APIRoute = async (context) => {
   try {
-    const RESEND_API_KEY = import.meta.env.RESEND_API_KEY;
-    const ADMIN_EMAIL = import.meta.env.ADMIN_EMAIL;
-    const FROM_EMAIL = import.meta.env.FROM_EMAIL;
+    // ✅ Cloudflare runtime env (Pages Functions)
+    const runtimeEnv =
+      (context.locals as any)?.runtime?.env || (context as any)?.env || {};
 
+    // ✅ Read env from runtime first, fallback to import.meta.env
+    const RESEND_API_KEY =
+      runtimeEnv.RESEND_API_KEY || import.meta.env.RESEND_API_KEY;
+    const ADMIN_EMAIL =
+      runtimeEnv.ADMIN_EMAIL || import.meta.env.ADMIN_EMAIL;
+    const FROM_EMAIL =
+      runtimeEnv.FROM_EMAIL || import.meta.env.FROM_EMAIL;
+
+    // ✅ If missing, return which ones are missing (so we stop guessing)
     if (!RESEND_API_KEY || !ADMIN_EMAIL || !FROM_EMAIL) {
-      return new Response(JSON.stringify({ ok: false, error: "Missing env vars" }), {
-        status: 500,
-        headers: { "Content-Type": "application/json" },
-      });
+      return new Response(
+        JSON.stringify({
+          ok: false,
+          error: "Missing env vars",
+          seen: {
+            RESEND_API_KEY: !!RESEND_API_KEY,
+            ADMIN_EMAIL: !!ADMIN_EMAIL,
+            FROM_EMAIL: !!FROM_EMAIL,
+          },
+        }),
+        { status: 500, headers: { "Content-Type": "application/json" } }
+      );
     }
 
-    const data = await request.formData();
+    const data = await context.request.formData();
 
     // honeypot spam check
     const hp = String(data.get("website") || "").trim();
     if (hp) {
-      return new Response(JSON.stringify({ ok: false, error: "Spam detected" }), {
-        status: 400,
-        headers: { "Content-Type": "application/json" },
-      });
+      return new Response(
+        JSON.stringify({ ok: false, error: "Spam detected" }),
+        { status: 400, headers: { "Content-Type": "application/json" } }
+      );
     }
 
-    const name = String(data.get("name") || "").trim();
-    const email = String(data.get("email") || "").trim();
-    const phone = String(data.get("phone") || "").trim();
-    const company = String(data.get("company") || "").trim();
-    const pickup = String(data.get("pickup") || "").trim();
-    const drop = String(data.get("drop") || "").trim();
-    const type = String(data.get("type") || "").trim();
-    const shift = String(data.get("shift") || "").trim();
-    const count = String(data.get("count") || "").trim();
-    const start = String(data.get("start") || "").trim();
+    // fields from your form
+    const name = String(data.get("name") || "");
+    const email = String(data.get("email") || "");
+    const phone = String(data.get("phone") || "");
+    const company = String(data.get("company") || "");
+    const pickup = String(data.get("pickup") || "");
+    const drop = String(data.get("drop") || "");
+    const type = String(data.get("type") || "");
+    const shift = String(data.get("shift") || "");
+    const count = String(data.get("count") || "");
+    const start = String(data.get("start") || "");
 
     if (!name || !email || !phone) {
-      return new Response(JSON.stringify({ ok: false, error: "Required fields missing" }), {
-        status: 400,
-        headers: { "Content-Type": "application/json" },
-      });
+      return new Response(
+        JSON.stringify({ ok: false, error: "Required fields missing" }),
+        { status: 400, headers: { "Content-Type": "application/json" } }
+      );
     }
 
+    // admin email
     const adminHtml = `
-      <div style="font-family:Arial,sans-serif;line-height:1.5">
-        <h2>New Quote Request</h2>
-        <p><b>Name:</b> ${esc(name)}</p>
-        <p><b>Email:</b> ${esc(email)}</p>
-        <p><b>Phone:</b> ${esc(phone)}</p>
-        <p><b>Company:</b> ${esc(company)}</p>
-        <p><b>Pickup:</b> ${esc(pickup)}</p>
-        <p><b>Drop:</b> ${esc(drop)}</p>
-        <p><b>Transport Type:</b> ${esc(type)}</p>
-        <p><b>Shift:</b> ${esc(shift)}</p>
-        <p><b>Employees:</b> ${esc(count)}</p>
-        <p><b>Start Date:</b> ${esc(start)}</p>
-      </div>
+      <h2>New Quote Request</h2>
+      <p><b>Name:</b> ${esc(name)}</p>
+      <p><b>Email:</b> ${esc(email)}</p>
+      <p><b>Phone:</b> ${esc(phone)}</p>
+      <p><b>Company:</b> ${esc(company)}</p>
+      <p><b>Pickup:</b> ${esc(pickup)}</p>
+      <p><b>Drop:</b> ${esc(drop)}</p>
+      <p><b>Transport Type:</b> ${esc(type)}</p>
+      <p><b>Shift:</b> ${esc(shift)}</p>
+      <p><b>Employees:</b> ${esc(count)}</p>
+      <p><b>Start Date:</b> ${esc(start)}</p>
     `;
 
+    // user confirmation
     const userHtml = `
-      <div style="font-family:Arial,sans-serif;line-height:1.5">
-        <p>Hi ${esc(name)},</p>
-        <p>We received your transport quote request with the following details:</p>
-        <hr/>
-        <p><b>Transport Type:</b> ${esc(type)}</p>
-        <p><b>Shift:</b> ${esc(shift)}</p>
-        <p><b>Pickup:</b> ${esc(pickup)}</p>
-        <p><b>Drop:</b> ${esc(drop)}</p>
-        <p><b>Employees:</b> ${esc(count)}</p>
-        <p><b>Start Date:</b> ${esc(start)}</p>
-        <hr/>
-        <p>Our team will contact you shortly.</p>
-        <p>– Krishna Logistics</p>
-      </div>
+      <p>Hi ${esc(name)},</p>
+      <p>We received your transport quote request with the following details:</p>
+      <hr/>
+      <p><b>Transport Type:</b> ${esc(type)}</p>
+      <p><b>Shift:</b> ${esc(shift)}</p>
+      <p><b>Pickup:</b> ${esc(pickup)}</p>
+      <p><b>Drop:</b> ${esc(drop)}</p>
+      <p><b>Employees:</b> ${esc(count)}</p>
+      <p><b>Start Date:</b> ${esc(start)}</p>
+      <hr/>
+      <p>Our team will contact you shortly.</p>
+      <p>– Krishna Logistics</p>
     `;
 
     const headers = {
@@ -93,6 +108,7 @@ export const POST: APIRoute = async ({ request }) => {
       Authorization: `Bearer ${RESEND_API_KEY}`,
     };
 
+    // send to admin
     const adminRes = await fetch("https://api.resend.com/emails", {
       method: "POST",
       headers,
@@ -100,6 +116,7 @@ export const POST: APIRoute = async ({ request }) => {
         from: FROM_EMAIL,
         to: [ADMIN_EMAIL],
         subject: `New Quote – ${name}`,
+        // ✅ Resend REST API expects "reply_to"
         reply_to: email,
         html: adminHtml,
       }),
@@ -107,12 +124,18 @@ export const POST: APIRoute = async ({ request }) => {
 
     if (!adminRes.ok) {
       const body = await adminRes.text();
-      return new Response(JSON.stringify({ ok: false, where: "admin", status: adminRes.status, body }), {
-        status: 500,
-        headers: { "Content-Type": "application/json" },
-      });
+      return new Response(
+        JSON.stringify({
+          ok: false,
+          where: "admin",
+          status: adminRes.status,
+          body,
+        }),
+        { status: 500, headers: { "Content-Type": "application/json" } }
+      );
     }
 
+    // send to user
     const userRes = await fetch("https://api.resend.com/emails", {
       method: "POST",
       headers,
@@ -126,20 +149,29 @@ export const POST: APIRoute = async ({ request }) => {
 
     if (!userRes.ok) {
       const body = await userRes.text();
-      return new Response(JSON.stringify({ ok: false, where: "user", status: userRes.status, body }), {
-        status: 500,
-        headers: { "Content-Type": "application/json" },
-      });
+      return new Response(
+        JSON.stringify({
+          ok: false,
+          where: "user",
+          status: userRes.status,
+          body,
+        }),
+        { status: 500, headers: { "Content-Type": "application/json" } }
+      );
     }
 
     return new Response(JSON.stringify({ ok: true }), {
       status: 200,
       headers: { "Content-Type": "application/json" },
     });
-  } catch (e: any) {
-    return new Response(JSON.stringify({ ok: false, error: e?.message || "Server error" }), {
-      status: 500,
-      headers: { "Content-Type": "application/json" },
-    });
+  } catch (err: any) {
+    return new Response(
+      JSON.stringify({
+        ok: false,
+        error: "Server error",
+        details: String(err?.message || err || ""),
+      }),
+      { status: 500, headers: { "Content-Type": "application/json" } }
+    );
   }
 };
