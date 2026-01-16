@@ -1,7 +1,3 @@
----
-const SHOW_AFTER = 300; // px scroll before showing
----
-
 <button
   class="kl-top"
   type="button"
@@ -13,11 +9,14 @@ const SHOW_AFTER = 300; // px scroll before showing
 
 <script is:inline>
   (() => {
+    // Define here so it exists at runtime.
+    // (Astro frontmatter variables are not available inside inline JS.)
+    const SHOW_AFTER = 300; // px scrolled before showing
     const btn = document.querySelector("[data-top]");
     if (!btn) return;
 
     const toggle = () => {
-      if (window.scrollY > {SHOW_AFTER}) {
+      if (window.scrollY > SHOW_AFTER) {
         btn.classList.add("is-visible");
       } else {
         btn.classList.remove("is-visible");

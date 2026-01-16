@@ -19,14 +19,22 @@ export const POST: APIRoute = async ({ request }) => {
     const FROM_EMAIL = import.meta.env.FROM_EMAIL;
 
     if (!RESEND_API_KEY || !ADMIN_EMAIL || !FROM_EMAIL) {
-      return new Response(JSON.stringify({ ok: false, error: "Missing env vars" }), { status: 500 });
+      return new Response(
+        JSON.stringify({ ok: false, error: "Missing env vars" }),
+        { status: 500, headers: { "Content-Type": "application/json" } }
+      );
     }
 
     const data = await request.formData();
 
     // honeypot spam check
-    if (data.get("website")) {
-      return new Response(JSON.stringify({ ok: true }), { status: 200 });
+    // If this field is filled, treat as spam and DO NOT fake success.
+    const hp = String(data.get("website") || "").trim();
+    if (hp) {
+      return new Response(
+        JSON.stringify({ ok: false, error: "Spam detected" }),
+        { status: 400, headers: { "Content-Type": "application/json" } }
+      );
     }
 
     // fields from YOUR form
@@ -42,7 +50,10 @@ export const POST: APIRoute = async ({ request }) => {
     const start = String(data.get("start") || "");
 
     if (!name || !email || !phone) {
-      return new Response(JSON.stringify({ ok: false, error: "Required fields missing" }), { status: 400 });
+      return new Response(
+        JSON.stringify({ ok: false, error: "Required fields missing" }),
+        { status: 400, headers: { "Content-Type": "application/json" } }
+      );
     }
 
     // admin email
@@ -95,7 +106,11 @@ export const POST: APIRoute = async ({ request }) => {
     });
 
     if (!adminRes.ok) {
-      return new Response(JSON.stringify({ ok: false }), { status: 500 });
+      const body = await adminRes.text();
+      return new Response(
+        JSON.stringify({ ok: false, where: "admin", status: adminRes.status, body }),
+        { status: 500, headers: { "Content-Type": "application/json" } }
+      );
     }
 
     // send to user
@@ -111,11 +126,21 @@ export const POST: APIRoute = async ({ request }) => {
     });
 
     if (!userRes.ok) {
-      return new Response(JSON.stringify({ ok: false }), { status: 500 });
+      const body = await userRes.text();
+      return new Response(
+        JSON.stringify({ ok: false, where: "user", status: userRes.status, body }),
+        { status: 500, headers: { "Content-Type": "application/json" } }
+      );
     }
 
-    return new Response(JSON.stringify({ ok: true }), { status: 200 });
+    return new Response(
+      JSON.stringify({ ok: true }),
+      { status: 200, headers: { "Content-Type": "application/json" } }
+    );
   } catch {
-    return new Response(JSON.stringify({ ok: false }), { status: 500 });
+    return new Response(
+      JSON.stringify({ ok: false, error: "Server error" }),
+      { status: 500, headers: { "Content-Type": "application/json" } }
+    );
   }
 };

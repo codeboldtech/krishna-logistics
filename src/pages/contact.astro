@@ -112,42 +112,6 @@ const address =
     </button>
   </div>
 </form>
-<script is:inline>
-  console.log("KL contact form script loaded");
-
-  const form = document.querySelector("form.kl-quoteform__grid");
-
-  if (!form) {
-    console.log("KL form not found");
-  } else {
-    form.addEventListener("submit", async (e) => {
-      e.preventDefault();
-      console.log("KL submit intercepted");
-
-      // clear honeypot (prevents autofill)
-      const hp = form.querySelector('input[name="website"]');
-      if (hp) hp.value = "";
-
-      const res = await fetch("/api/quote", {
-        method: "POST",
-        headers: { "Accept": "application/json" },
-        body: new FormData(form),
-      });
-
-      const data = await res.json().catch(() => ({}));
-      console.log("KL API response:", res.status, data);
-
-      if (res.ok && data.ok === true) {
-        window.location.href = "/thank-you/";
-        return;
-      }
-
-      alert("Not sent. Please try again.");
-    });
-  }
-</script>
-
-
 </div>
 
         </div>

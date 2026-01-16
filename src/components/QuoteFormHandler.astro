@@ -1,0 +1,49 @@
+---
+// Global handler for both footer + contact quote forms.
+// - Prevents normal POST navigation (which can cause 303 redirects)
+// - Sends form data to /api/quote and redirects only on real success
+---
+
+<script is:inline>
+  (() => {
+    const forms = document.querySelectorAll('form.kl-quoteform__grid[action="/api/quote"]');
+    if (!forms.length) return;
+
+    const redirectTo = "/thank-you/";
+
+    forms.forEach((form) => {
+      // Avoid double-binding if something re-renders
+      if (form.dataset.klBound === "1") return;
+      form.dataset.klBound = "1";
+
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        // Clear honeypot to avoid autofill blocking real users
+        const hp = form.querySelector('input[name="website"]');
+        if (hp) hp.value = "";
+
+        try {
+          const res = await fetch("/api/quote", {
+            method: "POST",
+            headers: { Accept: "application/json" },
+            body: new FormData(form),
+          });
+
+          const data = await res.json().catch(() => ({}));
+
+          if (res.ok && data.ok === true) {
+            window.location.href = redirectTo;
+            return;
+          }
+
+          console.log("Quote form failed:", res.status, data);
+          alert("Not sent. Please try again.");
+        } catch (err) {
+          console.log("Quote form network error:", err);
+          alert("Network error. Please try again.");
+        }
+      });
+    });
+  })();
+</script>

@@ -1,6 +1,7 @@
 ---
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
+import QuoteFormHandler from "../components/QuoteFormHandler.astro";
 import FloatingWhatsapp from "../components/FloatingWhatsapp.astro";
 import ScrollToTop from "../components/ScrollToTop.astro";
 import CookieNotice from "../components/CookieNotice.astro";
@@ -48,6 +49,9 @@ const {
 
     <!-- ✅ Footer with conditional form support -->
     <Footer hideForm={hideFooterForm} />
+
+    <!-- ✅ Handles quote form submissions (footer + contact) -->
+    <QuoteFormHandler />
 
     <FloatingWhatsapp />
     <ScrollToTop />
