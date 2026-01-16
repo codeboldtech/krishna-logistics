@@ -8,28 +8,22 @@
 </button>
 
 <script is:inline>
-  (() => {
-    // Define here so it exists at runtime.
-    // (Astro frontmatter variables are not available inside inline JS.)
-    const SHOW_AFTER = 300; // px scrolled before showing
-    const btn = document.querySelector("[data-top]");
+  const SHOW_AFTER = 300; // 👈 DEFINE IT HERE (runtime-safe)
+
+  const btn = document.querySelector(".kl-top");
+
+  function toggle() {
     if (!btn) return;
 
-    const toggle = () => {
-      if (window.scrollY > SHOW_AFTER) {
-        btn.classList.add("is-visible");
-      } else {
-        btn.classList.remove("is-visible");
-      }
-    };
+    if (window.scrollY > SHOW_AFTER) {
+      btn.classList.add("show");
+    } else {
+      btn.classList.remove("show");
+    }
+  }
 
-    btn.addEventListener("click", () => {
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    });
-
-    window.addEventListener("scroll", toggle, { passive: true });
-    toggle();
-  })();
+  window.addEventListener("scroll", toggle);
+  toggle();
 </script>
 
 <style>
