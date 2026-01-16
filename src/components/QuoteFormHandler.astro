@@ -1,4 +1,6 @@
 <script is:inline>
+  console.log("GLOBAL QUOTE FORM HANDLER LOADED");
+
   document.addEventListener("DOMContentLoaded", () => {
     // Bind to ALL quote forms (contact + footer)
     const forms = document.querySelectorAll('form.kl-quoteform__grid[action="/api/quote"][method="POST"]');
@@ -29,7 +31,7 @@
             return;
           }
 
-          console.log("Quote API failed:", res.status, data);
+          console.log("QUOTE API RESPONSE:", res.status, data);
           alert("Not sent. Please try again.");
         } catch (err) {
           console.log("Network error:", err);
