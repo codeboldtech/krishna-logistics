@@ -20,13 +20,21 @@ const storageKey = "kl_cookie_consent";
 </div>
 
 <script is:inline>
-  (() => {
-    const KEY = "{storageKey}";
+  function initCookieNotice() {
+    const KEY = "kl_cookie_consent"; // ✅ correct key
     const bar = document.querySelector("[data-cookie]");
     if (!bar) return;
 
+    // prevent double init after transitions
+    if (bar.dataset.klBound === "1") return;
+    bar.dataset.klBound = "1";
+
     /* If already decided, remove immediately */
-    const saved = localStorage.getItem(KEY);
+    let saved = null;
+    try {
+      saved = localStorage.getItem(KEY);
+    } catch (e) {}
+
     if (saved === "accepted" || saved === "declined") {
       bar.remove();
       return;
@@ -40,18 +48,19 @@ const storageKey = "kl_cookie_consent";
         localStorage.setItem(KEY, value);
       } catch (e) {}
 
-      /* smooth fade out */
       bar.style.opacity = "0";
       bar.style.transform = "translateY(12px)";
 
       setTimeout(() => {
-        bar.remove(); // ✅ completely removed from DOM
+        bar.remove();
       }, 220);
     };
 
     acceptBtn?.addEventListener("click", () => removeBar("accepted"));
     declineBtn?.addEventListener("click", () => removeBar("declined"));
-  })();
+  }
+
+  document.addEventListener("astro:page-load", initCookieNotice);
 </script>
 
 <style>

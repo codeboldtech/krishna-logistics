@@ -6,7 +6,7 @@ const slides = [
       "We ensure safe, punctual, and professionally managed employee transport services with trained drivers, GPS-tracked vehicles, and dependable operations designed for growing businesses.",
     image: "/images/home/Krishna-Logistics-Hero-1.webp",
     ctaText: "Get a Quote",
-    ctaHref: "/contact-us",
+    ctaHref: "/contact",
   },
   {
     title: "Safe, On-Time Workforce Commute Solutions",
@@ -14,7 +14,7 @@ const slides = [
       "Our structured pickup and drop services prioritize employee safety, route efficiency, and on-time performance, helping organizations maintain productivity without daily transportation concerns.",
     image: "/images/home/Krishna-Logistics-Hero-2.webp",
     ctaText: "Get a Quote",
-    ctaHref: "/contact-us",
+    ctaHref: "/contact",
   },
   {
     title: "Smart Corporate Transport Backed by Operational Excellence",
@@ -22,7 +22,7 @@ const slides = [
       "From daily employee commutes to large-scale corporate mobility, we deliver compliant, monitored, and scalable transport solutions that align with enterprise standards and long-term operational reliability.",
     image: "/images/home/Krishna-Logistics-Hero-3.webp",
     ctaText: "Get a Quote",
-    ctaHref: "/contact-us",
+    ctaHref: "/contact",
   },
 ];
 ---
@@ -75,9 +75,13 @@ const slides = [
 </section>
 
 <script is:inline>
-  document.addEventListener("DOMContentLoaded", () => {
+  function initHeroSlider() {
     const hero = document.querySelector("[data-hero]");
     if (!hero) return;
+
+    // prevent double init after transitions
+    if (hero.dataset.klBound === "1") return;
+    hero.dataset.klBound = "1";
 
     const track = hero.querySelector("[data-track]");
     const slides = Array.from(hero.querySelectorAll("[data-slide]"));
@@ -120,21 +124,37 @@ const slides = [
 
     // Swipe
     let startX = null;
-    hero.addEventListener("touchstart", (e) => {
-      startX = e.touches[0].clientX;
-    }, { passive: true });
+    hero.addEventListener(
+      "touchstart",
+      (e) => {
+        startX = e.touches[0].clientX;
+      },
+      { passive: true }
+    );
 
-    hero.addEventListener("touchend", (e) => {
-      if (startX === null) return;
-      const endX = e.changedTouches[0].clientX;
-      const diff = endX - startX;
-      if (Math.abs(diff) > 40) diff < 0 ? go(index + 1) : go(index - 1);
-      startX = null;
-    }, { passive: true });
-setInterval(() => {
-  go(index + 1);
-}, 4000);
+    hero.addEventListener(
+      "touchend",
+      (e) => {
+        if (startX === null) return;
+        const endX = e.changedTouches[0].clientX;
+        const diff = endX - startX;
+        if (Math.abs(diff) > 40) diff < 0 ? go(index + 1) : go(index - 1);
+        startX = null;
+      },
+      { passive: true }
+    );
+
+    // Auto-slide (store interval on the element so it doesn't duplicate)
+    if (hero.dataset.klInterval) {
+      clearInterval(Number(hero.dataset.klInterval));
+      hero.dataset.klInterval = "";
+    }
+    const id = setInterval(() => go(index + 1), 4000);
+    hero.dataset.klInterval = String(id);
+
     updateUI();
+  }
 
-  });
+  document.addEventListener("astro:page-load", initHeroSlider);
 </script>
+
