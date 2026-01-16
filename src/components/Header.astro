@@ -74,11 +74,17 @@ const ctaText = "Get a Quote";
   </div>
 </header>
 
-<script>
-  const burger = document.querySelector("[data-kl-burger]");
-  const mobile = document.querySelector("[data-kl-mobile]");
+<script is:inline>
+  function initHeaderMenu() {
+    const burger = document.querySelector("[data-kl-burger]");
+    const mobile = document.querySelector("[data-kl-mobile]");
 
-  if (burger && mobile) {
+    if (!burger || !mobile) return;
+
+    // Avoid double-binding after transitions
+    if (burger.dataset.klBound === "1") return;
+    burger.dataset.klBound = "1";
+
     burger.addEventListener("click", () => {
       const isOpen = mobile.classList.toggle("is-open");
       burger.classList.toggle("is-open", isOpen);
@@ -91,4 +97,7 @@ const ctaText = "Get a Quote";
       });
     });
   }
+
+  document.addEventListener("astro:page-load", initHeaderMenu);
 </script>
+

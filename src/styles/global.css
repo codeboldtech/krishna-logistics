@@ -1639,3 +1639,30 @@ font-size: 18px;
   height: auto;
   display: block;
 }
+* =========================================
+   VIEW TRANSITIONS (smooth page fade)
+   ========================================= */
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none !important;
+  }
+}
+
+::view-transition-old(root) {
+  animation: 180ms ease both kl-fade-out;
+}
+
+::view-transition-new(root) {
+  animation: 220ms ease both kl-fade-in;
+}
+
+@keyframes kl-fade-out {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}
+
+@keyframes kl-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}

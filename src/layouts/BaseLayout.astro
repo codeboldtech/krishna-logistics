@@ -4,6 +4,7 @@ import Footer from "../components/Footer.astro";
 import FloatingWhatsapp from "../components/FloatingWhatsapp.astro";
 import CookieNotice from "../components/CookieNotice.astro";
 import QuoteFormHandler from "../components/QuoteFormHandler.astro";
+import { ClientRouter } from "astro:transitions";
 
 const {
   title = "Krishna Logistics",
@@ -37,6 +38,7 @@ const {
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap"
       rel="stylesheet"
     />
+    <ClientRouter fallback="animate" />
   </head>
 
   <body>

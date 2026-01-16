@@ -1,19 +1,20 @@
 <script is:inline>
   console.log("GLOBAL QUOTE FORM HANDLER LOADED");
 
-  document.addEventListener("DOMContentLoaded", () => {
-    // Bind to ALL quote forms (contact + footer)
-    const forms = document.querySelectorAll('form.kl-quoteform__grid[action="/api/quote"][method="POST"]');
+  function bindQuoteForms() {
+    const forms = document.querySelectorAll(
+      'form.kl-quoteform__grid[action="/api/quote"][method="POST"]'
+    );
 
     forms.forEach((form) => {
-      // prevent double-binding
+      // Prevent duplicate bindings when navigating
       if (form.dataset.klBound === "1") return;
       form.dataset.klBound = "1";
 
       form.addEventListener("submit", async (e) => {
         e.preventDefault();
 
-        // Clear honeypot (avoids autofill triggering spam)
+        // Honeypot field safety (if present)
         const hp = form.querySelector('input[name="website"]');
         if (hp) hp.value = "";
 
@@ -26,18 +27,21 @@
 
           const data = await res.json().catch(() => ({}));
 
-          if (res.ok && data.ok === true) {
+          if (res.ok && data?.ok === true) {
             window.location.href = "/thank-you/";
             return;
           }
 
-          console.log("QUOTE API RESPONSE:", res.status, data);
+          console.log("QUOTE API ERROR:", res.status, data);
           alert("Not sent. Please try again.");
         } catch (err) {
-          console.log("Network error:", err);
+          console.log("QUOTE API NETWORK ERROR:", err);
           alert("Network error. Please try again.");
         }
       });
     });
-  });
+  }
+
+  // Runs on first page load + every transition navigation
+  document.addEventListener("astro:page-load", bindQuoteForms);
 </script>
