@@ -54,6 +54,47 @@ const {
     <ScrollToTop />
     <CookieNotice />
     <QuoteFormHandler />
+
+    <script is:inline>
+  console.log("GLOBAL QUOTE FORM HANDLER LOADED");
+
+  document.addEventListener("submit", async (e) => {
+    const form = e.target;
+
+    if (
+      form instanceof HTMLFormElement &&
+      form.matches('form[action="/api/quote"][method="POST"]')
+    ) {
+      e.preventDefault();
+
+      // clear honeypot if present
+      const hp = form.querySelector('input[name="website"]');
+      if (hp) hp.value = "";
+
+      try {
+        const res = await fetch("/api/quote", {
+          method: "POST",
+          headers: { "Accept": "application/json" },
+          body: new FormData(form),
+        });
+
+        const data = await res.json().catch(() => ({}));
+
+        console.log("QUOTE API RESPONSE:", res.status, data);
+
+        if (res.ok && data.ok === true) {
+          window.location.href = "/thank-you/";
+          return;
+        }
+
+        alert("Form submission failed. Please try again.");
+      } catch (err) {
+        console.error("Network error:", err);
+        alert("Network error. Please try again.");
+      }
+    }
+  });
+</script>
   </body>
 </html>
 
