@@ -1,28 +1,43 @@
-<button class="kl-top" type="button" aria-label="Back to top">↑</button>
+---
+const SHOW_AFTER = 300; // px scroll before showing
+---
+
+<button
+  class="kl-top"
+  type="button"
+  aria-label="Back to top"
+  data-top
+>
+  ↑
+</button>
 
 <script is:inline>
-  const SHOW_AFTER = 300;
-  const btn = document.querySelector(".kl-top");
-
-  function toggle() {
+  (() => {
+    const btn = document.querySelector("[data-top]");
     if (!btn) return;
-    if (window.scrollY > SHOW_AFTER) btn.classList.add("is-visible");
-    else btn.classList.remove("is-visible");
-  }
 
-  btn?.addEventListener("click", () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  });
+    const toggle = () => {
+      if (window.scrollY > {SHOW_AFTER}) {
+        btn.classList.add("is-visible");
+      } else {
+        btn.classList.remove("is-visible");
+      }
+    };
 
-  window.addEventListener("scroll", toggle);
-  toggle();
+    btn.addEventListener("click", () => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    window.addEventListener("scroll", toggle, { passive: true });
+    toggle();
+  })();
 </script>
 
 <style>
   .kl-top{
     position: fixed;
-    left: 18px;
-    bottom: 88px;
+    left: 18px;        /* ✅ LEFT SIDE */
+    bottom: 88px;      /* above cookie bar */
     z-index: 1150;
 
     width: 46px;
@@ -62,6 +77,7 @@
     transform: translateY(-2px);
   }
 
+  /* Mobile spacing */
   @media (max-width: 640px){
     .kl-top{
       left: 14px;
